@@ -18,9 +18,9 @@ class M_Admin extends CI_Model
     public function getMenu()
     {
         $this->db->select('menu.*, kategori.kategori');
-        $this->db->from('menu');
         $this->db->join('kategori', 'menu.kategori_id = kategori.id', 'inner');
-        return $this->db->get()->result();
+
+        return $this->db->get('menu')->result();
     }
 }
 
