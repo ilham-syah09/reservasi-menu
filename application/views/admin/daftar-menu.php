@@ -26,7 +26,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addKategori">Add Kategori</a>
+                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addKategori">Add Menu</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -49,7 +49,15 @@
                                                 <td class="text-center"><?= $i++; ?></td>
                                                 <td><?= $m->nama_menu; ?></td>
                                                 <td><?= $m->kategori; ?></td>
-                                                <td>ini gambar</td>
+                                                <td class="text-center">
+                                                    <?php if ($m->foto != null) : ?>
+                                                        <a href="<?= base_url('upload/menu/' . $m->foto); ?>" target="_blank">
+                                                            <img src="<?= base_url('upload/menu/' . $m->foto); ?>" alt="<?= $m->foto; ?>" class="img-thumbnail" width="200">
+                                                        </a>
+                                                    <?php else : ?>
+                                                        -
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td>1</td>
                                                 <td><?= $m->harga; ?></td>
                                                 <td>
@@ -83,7 +91,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/menu/add'); ?>" method="post">
+            <form action="<?= base_url('admin/menu/add'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -98,20 +106,28 @@
                                 <input type="number" class="form-control" name="harga">
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="inputState">Kategori</label>
-                            <select id="inputState" class="form-control" name="kategori_id">
-                                <option selected>Choose...</option>
-                                <?php foreach ($kategori as $kat) : ?>
-                                    <option value="<?= $kat->id; ?>"><?= $kat->kategori; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="inputState">Kategori</label>
+                                <select id="inputState" class="form-control" name="kategori_id">
+                                    <option selected>Choose...</option>
+                                    <?php foreach ($kategori as $kat) : ?>
+                                        <option value="<?= $kat->id; ?>"><?= $kat->kategori; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Foto</label>
+                                <input type="file" class="form-control" name="foto" accept=".jpeg, .jpg, .png">
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
@@ -128,7 +144,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/menu/edit'); ?>" method="post">
+            <form action="<?= base_url('admin/menu/edit'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -144,19 +160,27 @@
                                 <input type="number" class="form-control" name="harga" id="harga">
                             </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label>Kategori</label>
-                            <select name="kategori_id" class="form-control" id="kategori_id">
-                                <?php foreach ($kategori as $kat) : ?>
-                                    <option value="<?= $kat->id; ?>"><?= $kat->kategori; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Kategori</label>
+                                <select name="kategori_id" class="form-control" id="kategori_id">
+                                    <?php foreach ($kategori as $kat) : ?>
+                                        <option value="<?= $kat->id; ?>"><?= $kat->kategori; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Foto</label>
+                                <input type="file" class="form-control" name="foto" accept=".jpeg, .jpg, .png">
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>

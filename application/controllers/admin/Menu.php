@@ -33,29 +33,108 @@ class Menu extends CI_Controller
 
     public function add()
     {
-        $data = [
-            'nama_menu'    => $this->input->post('nama_menu'),
-            'harga'        => $this->input->post('harga'),
-            'kategori_id'  => $this->input->post('kategori_id'),
-        ];
+        $foto = $_FILES['foto']['name'];
 
-        $this->db->insert('menu', $data);
-        $this->session->set_flashdata('toastr-success', 'Berhasil tambah menu');
-        redirect('admin/menu');
+        if ($foto) {
+            $this->load->library('upload');
+            $config['upload_path']   = './upload/menu';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            // $config['max_size']             = 3072; // 3 mb
+            $config['remove_spaces'] = TRUE;
+            $config['detect_mime']   = TRUE;
+            $config['encrypt_name']  = TRUE;
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('foto')) {
+                $this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+                redirect('admin/menu', 'refresh');
+            } else {
+                $upload_data = $this->upload->data();
+
+                $data = [
+                    'nama_menu'   => $this->input->post('nama_menu'),
+                    'harga'       => $this->input->post('harga'),
+                    'kategori_id' => $this->input->post('kategori_id'),
+                    'foto'        => $upload_data['file_name']
+                ];
+            }
+        } else {
+            $data = [
+                'nama_menu'   => $this->input->post('nama_menu'),
+                'harga'       => $this->input->post('harga'),
+                'kategori_id' => $this->input->post('kategori_id')
+            ];
+        }
+
+        $insert = $this->db->insert('menu', $data);
+
+        if ($insert) {
+            $this->session->set_flashdata('toastr-success', 'Data berhasil ditambahkan');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Data gagal ditambahkan');
+        }
+
+        redirect('admin/menu', 'refresh');
     }
 
     public function edit()
     {
-        $data = [
-            'nama_menu'    => $this->input->post('nama_menu'),
-            'harga'        => $this->input->post('harga'),
-            'kategori_id'  => $this->input->post('kategori_id'),
-        ];
+        $foto = $_FILES['foto']['name'];
+
+        if ($foto) {
+            $this->load->library('upload');
+            $config['upload_path']   = './upload/menu';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            // $config['max_size']             = 3072; // 3 mb
+            $config['remove_spaces'] = TRUE;
+            $config['detect_mime']   = TRUE;
+            $config['encrypt_name']  = TRUE;
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('foto')) {
+                $this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+                redirect('admin/menu', 'refresh');
+            } else {
+                $upload_data = $this->upload->data();
+
+                $this->db->where('id', $this->input->post('id'));
+                $data = $this->db->get('menu')->row();
+
+                if ($data->foto != null) {
+                    unlink(FCPATH . 'upload/menu/' . $data->foto);
+                }
+
+                $data = [
+                    'nama_menu'   => $this->input->post('nama_menu'),
+                    'harga'       => $this->input->post('harga'),
+                    'kategori_id' => $this->input->post('kategori_id'),
+                    'foto'        => $upload_data['file_name']
+                ];
+            }
+        } else {
+            $data = [
+                'nama_menu'   => $this->input->post('nama_menu'),
+                'harga'       => $this->input->post('harga'),
+                'kategori_id' => $this->input->post('kategori_id')
+            ];
+        }
 
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('menu', $data);
-        $this->session->set_flashdata('toastr-success', 'Berhasil edit menu');
-        redirect('admin/menu');
+        $update = $this->db->update('menu', $data);
+
+        if ($update) {
+            $this->session->set_flashdata('toastr-success', 'Data berhasil ditambahkan');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Data gagal ditambahkan');
+        }
+
+        redirect('admin/menu', 'refresh');
     }
 
     public function delete($id)
