@@ -14,6 +14,8 @@ class Progress extends CI_Controller
 
         $this->db->where('id', $this->session->userdata('id'));
         $this->dt_user = $this->db->get('user')->row();
+
+        $this->load->model('M_Admin', 'admin');
     }
 
     public function index()
@@ -22,9 +24,37 @@ class Progress extends CI_Controller
             'title'   => 'Progress Pesanan',
             'navbar'  => 'admin/navbar',
             'page'    => 'admin/progress',
+            'pesanan' => $this->admin->getPesanan([
+                'statusPembayaran' => 1
+            ])
         ];
 
         $this->load->view('index', $data);
+    }
+
+    public function getListProgres()
+    {
+        $result = [
+            'data' => $this->admin->getListProgres([
+                'idUser' => $this->input->get('idUser'),
+                'idKhusus' => $this->input->get('idKhusus'),
+            ])
+        ];
+
+        echo json_encode($result);
+    }
+
+    public function add()
+    {
+        $data = [
+            'idUser'   => $this->input->post('idUser'),
+            'idKhusus' => $this->input->post('idKhusus'),
+            'status'   => $this->input->post('status'),
+        ];
+
+        $this->db->insert('progres', $data);
+        $this->session->set_flashdata('toastr-success', 'Berhasil tambah progres');
+        redirect('admin/progress');
     }
 }
 

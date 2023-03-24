@@ -24,9 +24,6 @@
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="alert alert-info" role="alert">
-                        tampilkan progress pesanan jika pembayaran berstatus ACC Pembayaran
-                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -34,26 +31,27 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th>User</th>
-                                            <th>Alamat</th>
-                                            <th>No Hp</th>
-                                            <th>Pesanan</th>
+                                            <th>Nama Pembeli</th>
+                                            <th>No HP</th>
                                             <th>Catatan</th>
-                                            <th>Status</th>
+                                            <th>Alamat</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>abdul</td>
-                                            <td>Jl, Tanjung No 10</td>
-                                            <td>08912334567</td>
-                                            <td>Hoka Bento</td>
-                                            <td>Rumah rumah depan rel</td>
-                                            <td>default (sedang dibuat) / dikemas / dikirim / selesai</td>
-                                            <td>-</td>
-                                        </tr>
+                                        <?php foreach ($pesanan as $i => $psn) : ?>
+                                            <tr>
+                                                <td><?= $i + 1; ?></td>
+                                                <td><?= $psn->name; ?></td>
+                                                <td><?= $psn->noHp; ?></td>
+                                                <td><?= $psn->catatan; ?></td>
+                                                <td><?= $psn->alamat; ?></td>
+                                                <td>
+                                                    <a href="#" class="badge badge-warning detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>">Detail Pesanan</a>
+                                                    <a href="#" class="badge badge-info progres_btn" data-toggle="modal" data-target="#progresPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>">Progres</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -69,23 +67,120 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- modal add -->
-<div class="modal fade" id="addKategori" tabindex="-1" role="dialog" aria-labelledby="addKategori" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- modal detail pesanan -->
+<div class="modal fade" id="detailPesanan" tabindex="-1" role="dialog" aria-labelledby="detailPesananTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Kategori</h5>
+                <h5 class="modal-title">Detail Pesanan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/kategori/add'); ?>" method="post">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div id="tampil" class="d-none">
+                                <label>Daftar Pesanan</label>
+                                <div class="table-responsive" style="overflow-y: auto; max-height: 500px;">
+                                    <table class="table table-bordered table-hover table-vcenter" id="tabel_detail">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th>Nama Menu</th>
+                                                <th>Jumlah Pesanan</th>
+                                                <th>Harga</th>
+                                                <th>Total Harga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="isi_table">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal progres pesanan -->
+<div class="modal fade" id="progresPesanan" tabindex="-1" role="dialog" aria-labelledby="progresPesananTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Progres Pesanan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProgres">Tambah Progres</a>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div id="tampil-progres" class="d-none">
+                                <label>Progres Pesanan</label>
+                                <div class="table-responsive" style="overflow-y: auto; max-height: 500px;">
+                                    <table class="table table-bordered table-hover table-vcenter" id="tabel-progres">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th>Status</th>
+                                                <th>Tanggal</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="isi_table-progres">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal add -->
+<div class="modal fade" id="addProgres" tabindex="-1" role="dialog" aria-labelledby="addProgres" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Progres</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('admin/progress/add'); ?>" method="post">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <input type="hidden" name="idUser" id="idUser">
+                            <input type="hidden" name="idKhusus" id="idKhusus">
                             <div class="form-group">
-                                <label>Nama Kategori</label>
-                                <input type="text" class="form-control" name="kategori">
+                                <label>Status</label>
+                                <select name="status" class="form-control">
+                                    <option value="">-- Pilih Status --</option>
+                                    <option value="Sedang diproses">Sedang diproses</option>
+                                    <option value="Sedang diantar">Sedang Diantar</option>
+                                    <option value="Sudah diterima pembeli">Sudah diterima pembeli</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -99,33 +194,127 @@
     </div>
 </div>
 
-<!-- modal edit -->
-<div class="modal fade" id="editKategori" tabindex="-1" role="dialog" aria-labelledby="editKategori" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Kategori</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="<?= base_url('admin/kategori/edit'); ?>" method="post">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nama Kategori</label>
-                                <input type="hidden" name="id" id="id">
-                                <input type="text" class="form-control" name="kategori" id="kategori">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    let detail_btn = $('.detail_btn');
+
+    $(detail_btn).each(function(i) {
+        $(detail_btn[i]).click(function() {
+            let idUser = $(this).data('iduser');
+            let idKhusus = $(this).data('idkhusus');
+
+            $.ajax({
+                url: `<?= base_url('admin/pesanan/getListPesanan'); ?>`,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    idUser,
+                    idKhusus
+                },
+                async: true,
+                beforeSend: function(e) {
+                    $('#loader').removeClass('d-none');
+                    $('#tampil').addClass('d-none');
+                },
+                success: function(res) {
+                    $('#tampil').removeClass('d-none');
+                    $('.tr_isi').remove();
+
+                    if (res.data != null) {
+                        let totalHarga = 0;
+                        let harga = 0;
+
+                        let rupiah = new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        });
+
+                        $(res.data).each(function(i) {
+                            harga = (res.data[i].total * res.data[i].harga);
+                            totalHarga += harga;
+
+                            $("#tabel_detail").append(
+                                "<tr class='tr_isi'>" +
+                                "<td class='text-center'>" + (i + 1) + "</td>" +
+                                "<td>" + res.data[i].nama_menu + "</td>" +
+                                "<td>" + res.data[i].harga + "</td>" +
+                                "<td>" + res.data[i].total + "</td>" +
+                                "<td>" + rupiah.format(harga) + "</td>" +
+                                "<tr>"
+                            );
+                        });
+
+                        $("#tabel_detail").append(
+                            "<tr class='tr_total'>" +
+                            "<td colspan='4' class='text-center'>Total Bayar</td>" +
+                            "<td>" + rupiah.format(totalHarga) + "</td>" +
+                            "<tr>"
+                        );
+                    } else {
+                        $("#tabel_detail").append(
+                            "<tr class='tr_isi'>" +
+                            "<td colspan='5' class='text-center'>Kosong</td>" +
+                            "<tr>");
+                    }
+                },
+                complete: function() {
+                    $('#tampil').removeClass('d-none');
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    });
+
+    let progres_btn = $('.progres_btn');
+
+    $(progres_btn).each(function(i) {
+        $(progres_btn[i]).click(function() {
+            let idUser = $(this).data('iduser');
+            let idKhusus = $(this).data('idkhusus');
+
+            $('#idUser').val(idUser);
+            $('#idKhusus').val(idKhusus);
+
+            $.ajax({
+                url: `<?= base_url('admin/progress/getListProgres'); ?>`,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    idUser,
+                    idKhusus
+                },
+                async: true,
+                beforeSend: function(e) {
+                    $('#tampil-progres').addClass('d-none');
+                },
+                success: function(res) {
+                    $('#tampil-progres').removeClass('d-none');
+                    $('.tr_isi-progres').remove();
+
+                    console.log(res);
+
+                    if (res.data != null) {
+                        $(res.data).each(function(i) {
+                            $("#tabel-progres").append(
+                                `<tr class='tr_isi-progres'>
+                                <td class='text-center'>${i + 1}</td>
+                                <td>${res.data[i].status}</td>
+                                <td>${res.data[i].createdAt}</td>
+                                <td><a href="<?= base_url('admin/progress/delete/'); ?>${res.data[i].id}" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a></td>
+                                <tr>`
+                            );
+                        });
+
+                    } else {
+                        $("#tabel-progres").append(
+                            "<tr class='tr_isi-progres'>" +
+                            "<td colspan='3' class='text-center'>Kosong</td>" +
+                            "<tr>");
+                    }
+                },
+                complete: function() {
+                    $('#tampil-progres').removeClass('d-none');
+                }
+            });
+        });
+    });
+</script>

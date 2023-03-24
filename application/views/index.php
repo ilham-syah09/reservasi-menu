@@ -88,7 +88,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <strong>Copyright &copy; Reservasi Menu </strong>
+            <strong>Copyright &copy; <?= date('Y'); ?> <a href="<?= base_url(); ?>" target="_blank">Reservasi Menu</a></strong>
         </footer>
     </div>
     <!-- ./wrapper -->

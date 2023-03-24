@@ -137,11 +137,42 @@ class Menu extends CI_Controller
         redirect('admin/menu', 'refresh');
     }
 
+    public function stok()
+    {
+        $data = [
+            'stok' => ($this->input->post('stokLama') + $this->input->post('stok'))
+        ];
+
+        $this->db->where('id', $this->input->post('id'));
+        $update = $this->db->update('menu', $data);
+
+        if ($update) {
+            $this->session->set_flashdata('toastr-success', 'Stok berhasil ditambahkan');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Stok gagal ditambahkan');
+        }
+
+        redirect('admin/menu', 'refresh');
+    }
+
     public function delete($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('menu');
-        $this->session->set_flashdata('toastr-success', 'Berhasil hapus menu');
+        $data = $this->db->get('menu')->row();
+
+        $this->db->where('id', $id);
+        $delete = $this->db->delete('menu');
+
+        if ($delete) {
+            if ($data->foto != null) {
+                unlink(FCPATH . 'upload/pengaduan/' . $data->foto);
+            }
+
+            $this->session->set_flashdata('toastr-success', 'Data berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Data gagal dihapus!!');
+        }
+
         redirect('admin/menu');
     }
 }

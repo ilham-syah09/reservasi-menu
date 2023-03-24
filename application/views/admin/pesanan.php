@@ -24,9 +24,6 @@
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="alert alert-info" role="alert">
-                        tampilkan data jika user sudah upload bukti pembayaran!
-                    </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -34,28 +31,45 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
-                                            <th>User</th>
-                                            <th>Alamat</th>
-                                            <th>No Hp</th>
-                                            <th>Pesanan</th>
-                                            <th>Bukti Bayar</th>
+                                            <th>Nama Pembeli</th>
+                                            <th>No HP</th>
                                             <th>Catatan</th>
-                                            <th>Status</th>
+                                            <th>Alamat</th>
+                                            <th>Bukti Bayar</th>
+                                            <th>Status Pembayaran</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>abdul</td>
-                                            <td>Jl, Tanjung No 10</td>
-                                            <td>08912334567</td>
-                                            <td>Hoka Bento</td>
-                                            <td>ini bukti bayar</td>
-                                            <td>Rumah rumah depan rel</td>
-                                            <td>default (menunggu) / ACC pembayaran</td>
-                                            <td> - | jika status pembayaran acc print faktur/nota</td>
-                                        </tr>
+                                        <?php foreach ($pesanan as $i => $psn) : ?>
+                                            <tr>
+                                                <td><?= $i + 1; ?></td>
+                                                <td><?= $psn->name; ?></td>
+                                                <td><?= $psn->noHp; ?></td>
+                                                <td><?= $psn->catatan; ?></td>
+                                                <td><?= $psn->alamat; ?></td>
+                                                <td>
+                                                    <?php if ($psn->buktiPembayaran != null) : ?>
+                                                        <a href="<?= base_url('upload/bukti/' . $psn->buktiPembayaran); ?>" target="_blank">
+                                                            <img src="<?= base_url('upload/bukti/' . $psn->buktiPembayaran); ?>" alt="<?= $psn->buktiPembayaran; ?>" class="img-thumbnail" width="180">
+                                                        </a>
+                                                    <?php else : ?>
+                                                        -
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?php if ($psn->statusPembayaran == 0) : ?>
+                                                        <span class="badge badge-warning">Belum Bayar</span>
+                                                    <?php elseif ($psn->statusPembayaran == 1) : ?>
+                                                        <span class="badge badge-success">Lunas</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="badge badge-info detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-link="<?= base_url('admin/pesanan/cetak/' . $psn->idUser . '/' . $psn->idKhusus); ?>">Detail</a>
+                                                    <a href="#" class="badge badge-danger statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -71,63 +85,171 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- modal add -->
-<div class="modal fade" id="addKategori" tabindex="-1" role="dialog" aria-labelledby="addKategori" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- modal detail pesanan -->
+<div class="modal fade" id="detailPesanan" tabindex="-1" role="dialog" aria-labelledby="detailPesananTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Kategori</h5>
+                <h5 class="modal-title">Detail Pesanan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/kategori/add'); ?>" method="post">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div id="tampil" class="d-none">
+                                <label>Daftar Pesanan</label>
+                                <div class="table-responsive" style="overflow-y: auto; max-height: 500px;">
+                                    <table class="table table-bordered table-hover table-vcenter" id="tabel_detail">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th>Nama Menu</th>
+                                                <th>Jumlah Pesanan</th>
+                                                <th>Harga</th>
+                                                <th>Total Harga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="isi_table">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a class="btn btn-primary" target="_blank" id="cetak-btn">Cetak</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal status pembayaran -->
+<div class="modal fade" id="statusPembayaranModal" tabindex="-1" role="dialog" aria-labelledby="statusPembayaranModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Status Pembayaran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('admin/pesanan/status'); ?>" method="POST">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Nama Kategori</label>
-                                <input type="text" class="form-control" name="kategori">
+                                <input type="hidden" name="idUser" id="idUser">
+                                <input type="hidden" name="idKhusus" id="idKhusus">
+                                <label>Daftar Pesanan</label>
+                                <select name="statusPembayaran" id="statusPembayaran" class="form-control">
+                                    <option value="0">Belum Bayar</option>
+                                    <option value="1">Lunas</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- modal edit -->
-<div class="modal fade" id="editKategori" tabindex="-1" role="dialog" aria-labelledby="editKategori" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Kategori</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="<?= base_url('admin/kategori/edit'); ?>" method="post">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Nama Kategori</label>
-                                <input type="hidden" name="id" id="id">
-                                <input type="text" class="form-control" name="kategori" id="kategori">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+    let detail_btn = $('.detail_btn');
+
+    $(detail_btn).each(function(i) {
+        $(detail_btn[i]).click(function() {
+            let idUser = $(this).data('iduser');
+            let idKhusus = $(this).data('idkhusus');
+            let link = $(this).data('link');
+
+            $("#cetak-btn").attr("href", link);
+
+            $.ajax({
+                url: `<?= base_url('admin/pesanan/getListPesanan'); ?>`,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    idUser,
+                    idKhusus
+                },
+                async: true,
+                beforeSend: function(e) {
+                    $('#loader').removeClass('d-none');
+                    $('#tampil').addClass('d-none');
+                },
+                success: function(res) {
+                    $('#tampil').removeClass('d-none');
+                    $('.tr_isi').remove();
+                    $('.tr_total').remove();
+
+                    if (res.data != null) {
+                        let totalHarga = 0;
+                        let harga = 0;
+
+                        let rupiah = new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        });
+
+                        $(res.data).each(function(i) {
+                            harga = (res.data[i].total * res.data[i].harga);
+                            totalHarga += harga;
+
+                            $("#tabel_detail").append(
+                                "<tr class='tr_isi'>" +
+                                "<td class='text-center'>" + (i + 1) + "</td>" +
+                                "<td>" + res.data[i].nama_menu + "</td>" +
+                                "<td>" + res.data[i].harga + "</td>" +
+                                "<td>" + res.data[i].total + "</td>" +
+                                "<td>" + rupiah.format(harga) + "</td>" +
+                                "<tr>"
+                            );
+                        });
+
+                        $("#tabel_detail").append(
+                            "<tr class='tr_total'>" +
+                            "<td colspan='4' class='text-center'>Total Bayar</td>" +
+                            "<td>" + rupiah.format(totalHarga) + "</td>" +
+                            "<tr>"
+                        );
+                    } else {
+                        $("#tabel_detail").append(
+                            "<tr class='tr_isi'>" +
+                            "<td colspan='5' class='text-center'>Kosong</td>" +
+                            "<tr>");
+                    }
+                },
+                complete: function() {
+                    $('#tampil').removeClass('d-none');
+                    $('#loader').addClass('d-none');
+                }
+            });
+        });
+    });
+
+    let statusPem_btn = $('.statusPem_btn');
+
+    $(statusPem_btn).each(function(i) {
+        $(statusPem_btn[i]).click(function() {
+            let idUser = $(this).data('iduser');
+            let idKhusus = $(this).data('idkhusus');
+            let statusPembayaran = $(this).data('statuspembayaran');
+
+            $('#idUser').val(idUser);
+            $('#idKhusus').val(idKhusus);
+            $('#statusPembayaran').val(statusPembayaran);
+        });
+    });
+</script>

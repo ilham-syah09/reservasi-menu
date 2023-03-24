@@ -58,9 +58,10 @@
                                                         -
                                                     <?php endif; ?>
                                                 </td>
-                                                <td>1</td>
+                                                <td><?= $m->stok; ?></td>
                                                 <td><?= $m->harga; ?></td>
                                                 <td>
+                                                    <a href="#" class="badge badge-info stok_btn" data-toggle="modal" data-target="#stokModal" data-id="<?= $m->id; ?>" data-stok="<?= $m->stok; ?>">Stok</a>
                                                     <a href="#" class="badge badge-warning edit_btn" data-toggle="modal" data-target="#editMenu" data-id="<?= $m->id; ?>" data-nama_menu="<?= $m->nama_menu; ?>" data-harga="<?= $m->harga; ?>" data-katid="<?= $m->kategori_id; ?>">Edit</a>
                                                     <a href="<?= base_url('admin/menu/delete/' . $m->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a>
                                                 </td>
@@ -187,6 +188,38 @@
     </div>
 </div>
 
+<!-- modal stok -->
+<div class="modal fade" id="stokModal" tabindex="-1" role="dialog" aria-labelledby="stokModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Stok</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('admin/menu/stok'); ?>" method="post">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" name="id" id="idMenu">
+                            <input type="hidden" name="stokLama" id="stokLama">
+                            <div class="form-group">
+                                <label>Jumlah Stok</label>
+                                <input type="text" class="form-control" name="stok">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     let edit_btn = $('.edit_btn');
 
@@ -201,6 +234,18 @@
             $('#nama_menu').val(nama_menu);
             $('#harga').val(harga);
             $('#kategori_id').val(katid);
+        });
+    });
+
+    let stok_btn = $('.stok_btn');
+
+    $(stok_btn).each(function(i) {
+        $(stok_btn[i]).click(function() {
+            let id = $(this).data('id');
+            let stok = $(this).data('stok');
+
+            $('#idMenu').val(id);
+            $('#stokLama').val(stok);
         });
     });
 </script>
