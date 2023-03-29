@@ -46,7 +46,7 @@
 						<div class="col-6">
 							<div class="d-flex align-items-center justify-content-between mb-4">
 								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Search by name" id="input-search" value="<?= ($filter != 1 && $filter != 2 && $filter != 3 && $filter != 4) ? $filter : ''; ?>">
+									<input type="text" class="form-control" placeholder="Search by name" id="input-search" value="<?= ($filter != 1 && $filter != 2 && $filter != 3 && $filter != 4) ? $filter : ''; ?>" autocomplete="off">
 									<div class="input-group-append">
 										<span class="input-group-text bg-transparent text-primary" id="btn-search">
 											<i class="fa fa-search"></i>
