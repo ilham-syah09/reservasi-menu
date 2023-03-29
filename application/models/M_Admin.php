@@ -10,8 +10,26 @@ class M_Admin extends CI_Model
         return $this->db->get('user')->result();
     }
 
+    public function getCountUser()
+    {
+        $this->db->where('role', 2);
+        return $this->db->get('user')->num_rows();
+    }
+
+    public function getCountMenu()
+    {
+        return $this->db->get('user')->num_rows();
+    }
+
+    public function getCountOrders()
+    {
+        return $this->db->get('orders')->num_rows();
+    }
+
     public function getKategori()
     {
+        $this->db->order_by('kategori', 'asc');
+
         return $this->db->get('kategori')->result();
     }
 
@@ -19,6 +37,8 @@ class M_Admin extends CI_Model
     {
         $this->db->select('menu.*, kategori.kategori');
         $this->db->join('kategori', 'menu.kategori_id = kategori.id', 'inner');
+
+        $this->db->order_by('menu.createdAt', 'desc');
 
         return $this->db->get('menu')->result();
     }
@@ -57,6 +77,14 @@ class M_Admin extends CI_Model
         $this->db->where($where);
 
         return $this->db->get('progres')->row();
+    }
+
+    public function getListGambar($where)
+    {
+        $this->db->where($where);
+        $this->db->order_by('createdAt', 'desc');
+
+        return $this->db->get('gambar')->result();
     }
 
     public function getListProgres($where)

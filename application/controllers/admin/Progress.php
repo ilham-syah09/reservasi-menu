@@ -8,7 +8,7 @@ class Progress extends CI_Controller
     {
         parent::__construct();
         if (empty($this->session->userdata('log_admin'))) {
-            $this->session->set_flashdata('toastr-eror', 'Anda Belum Login');
+            $this->session->set_flashdata('toastr-error', 'Anda Belum Login');
             redirect('auth', 'refresh');
         }
 
@@ -34,11 +34,13 @@ class Progress extends CI_Controller
 
     public function getListProgres()
     {
+        $progres = $this->admin->getListProgres([
+            'idUser' => $this->input->get('idUser'),
+            'idKhusus' => $this->input->get('idKhusus'),
+        ]);
+
         $result = [
-            'data' => $this->admin->getListProgres([
-                'idUser' => $this->input->get('idUser'),
-                'idKhusus' => $this->input->get('idKhusus'),
-            ])
+            'data' => ($progres) ? $progres : null
         ];
 
         echo json_encode($result);

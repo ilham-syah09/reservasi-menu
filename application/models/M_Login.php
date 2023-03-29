@@ -31,10 +31,10 @@ class M_Login extends CI_Model
                     return 'Akun belum di aktivasi!';
                 }
             } else {
-                return 'email atau Password Salah!!';
+                return 'Email atau Password Salah!!';
             }
         } else {
-            return 'email atau Password Salah!!';
+            return 'Email atau Password Salah!!';
         }
     }
 }

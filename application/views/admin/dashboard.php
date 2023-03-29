@@ -24,7 +24,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Jumlah Menu</span>
                             <span class="info-box-number">
-                                10
+                                <?= $menu; ?>
                             </span>
                         </div>
                         <!-- /.info-box-content -->
@@ -38,7 +38,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Jumlah Order</span>
-                            <span class="info-box-number">4</span>
+                            <span class="info-box-number"><?= $orders; ?></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -68,7 +68,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Jumlah User</span>
-                            <span class="info-box-number">2,000</span>
+                            <span class="info-box-number"><?= $user; ?></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

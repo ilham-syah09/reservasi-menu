@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 | Typically there is a one-to-one relationship between a URL string
 | and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
+| URL normally follow this pattern: 
 |
 |	example.com/class/method/id/
 |
@@ -17,28 +17,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | so that a different class/function is called than the one
 | corresponding to the URL.
 |
-| Please see the user guide for complete details:
+| Please see the user guide for complete details: 
 |
-|	https://codeigniter.com/userguide3/general/routing.html
+| https: //codeigniter.com/userguide3/general/routing.html
 |
 | -------------------------------------------------------------------------
 | RESERVED ROUTES
 | -------------------------------------------------------------------------
 |
-| There are three reserved routes:
+| There are three reserved routes: 
 |
-|	$route['default_controller'] = 'welcome';
+| $route['default_controller'] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
 | URI contains no data. In the above example, the "welcome" class
 | would be loaded.
 |
-|	$route['404_override'] = 'errors/page_missing';
+| $route['404_override'] = 'errors/page_missing';
 |
 | This route will tell the Router which controller/method to use if those
 | provided in the URL cannot be matched to a valid route.
 |
-|	$route['translate_uri_dashes'] = FALSE;
+| $route['translate_uri_dashes'] = FALSE;
 |
 | This is not exactly a route, but allows you to automatically route
 | controller and method names that contain dashes. '-' isn't a valid
@@ -46,11 +46,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | When you set this option to TRUE, it will replace ALL dashes in the
 | controller and method URI segments.
 |
-| Examples:	my-controller/index	-> my_controller/index
+| Examples: my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'frontend';
-$route['404_override'] = '';
+$route['default_controller']   = 'frontend';
+$route['404_override']         = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // admin
@@ -58,3 +58,23 @@ $route['admin'] = 'admin/home';
 
 // user
 $route['user'] = 'user/home';
+
+// frontend
+$route['home'] = 'frontend';
+
+$route['shop']                      = 'frontend/shop';
+$route['shop/(:any)']               = 'frontend/shop/$1';
+$route['shop/(:any)/(:any)']        = 'frontend/shop/$1/$2';
+$route['shop/(:any)/(:any)/(:any)'] = 'frontend/shop/$1/$2/$3';
+
+$route['detail/(:any)'] = 'frontend/detail/$1';
+
+$route['contact'] = 'frontend/contact';
+
+$route['cart'] = 'frontend/cart';
+
+$route['checkout'] = 'frontend/checkout';
+
+$route['addToCart']      = 'frontend/addToCart';
+$route['deleteCart']     = 'frontend/deleteCart';
+$route['updateQuantity'] = 'frontend/updateQuantity';

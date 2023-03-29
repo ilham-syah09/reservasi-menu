@@ -35,6 +35,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th>Kategori</th>
+                                            <th>Gambar</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -44,6 +45,15 @@
                                             <tr>
                                                 <td class="text-center"><?= $i++; ?></td>
                                                 <td><?= $kat->kategori; ?></td>
+                                                <td class="text-center">
+                                                    <?php if ($kat->gambar != null) : ?>
+                                                        <a href="<?= base_url('upload/gambar/' . $kat->gambar); ?>" target="_blank">
+                                                            <img src="<?= base_url('upload/gambar/' . $kat->gambar); ?>" alt="<?= $kat->gambar; ?>" class="img-thumbnail" width="200">
+                                                        </a>
+                                                    <?php else : ?>
+                                                        -
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td>
                                                     <a href="#" class="badge badge-warning edit_btn" data-toggle="modal" data-target="#editKategori" data-id="<?= $kat->id; ?>" data-kategori="<?= $kat->kategori; ?>">Edit</a>
                                                     <a href="<?= base_url('admin/kategori/delete/' . $kat->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a>
@@ -75,13 +85,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/kategori/add'); ?>" method="post">
+            <form action="<?= base_url('admin/kategori/add'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Kategori</label>
                                 <input type="text" class="form-control" name="kategori">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Gambar</label>
+                                <input type="file" class="form-control" name="gambar" accept=".jpeg, .jpg, .png">
                             </div>
                         </div>
                     </div>
@@ -106,13 +122,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('admin/kategori/edit'); ?>" method="post">
+                <form action="<?= base_url('admin/kategori/edit'); ?>" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Nama Kategori</label>
                                 <input type="hidden" name="id" id="id">
                                 <input type="text" class="form-control" name="kategori" id="kategori">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Gambar</label>
+                                <input type="file" class="form-control" name="gambar" accept=".jpeg, .jpg, .png">
                             </div>
                         </div>
                     </div>

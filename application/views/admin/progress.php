@@ -123,13 +123,12 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-3">
                         <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addProgres">Tambah Progres</a>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <div id="tampil-progres" class="d-none">
-                                <label>Progres Pesanan</label>
                                 <div class="table-responsive" style="overflow-y: auto; max-height: 500px;">
                                     <table class="table table-bordered table-hover table-vcenter" id="tabel-progres">
                                         <thead>

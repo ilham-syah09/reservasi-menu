@@ -8,7 +8,7 @@ class User extends CI_Controller
     {
         parent::__construct();
         if (empty($this->session->userdata('log_admin'))) {
-            $this->session->set_flashdata('toastr-eror', 'Anda Belum Login');
+            $this->session->set_flashdata('toastr-error', 'Anda Belum Login');
             redirect('auth', 'refresh');
         }
 
