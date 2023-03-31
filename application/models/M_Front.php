@@ -85,7 +85,7 @@ class M_Front extends CI_Model
 
 	public function getCart($where)
 	{
-		$this->db->select('menu.nama_menu, menu.harga, keranjang.*');
+		$this->db->select('menu.nama_menu, menu.harga, menu.stok, keranjang.*');
 		$this->db->join('menu', 'menu.id = keranjang.idMenu', 'inner');
 
 		$this->db->where($where);
@@ -99,6 +99,39 @@ class M_Front extends CI_Model
 
 		$this->db->where($where);
 		return $this->db->get('keranjang')->row();
+	}
+
+	public function getListOrders($where)
+	{
+		if ($where) {
+			$this->db->where($where);
+		}
+
+		$this->db->group_by('idKhusus,');
+		$this->db->order_by('createdAt', 'desc');
+
+		return $this->db->get('orders')->result();
+	}
+
+	public function getListProduct($where)
+	{
+		$this->db->select('menu.nama_menu, menu.harga, keranjang.total, orders.idKhusus, orders.statusPembayaran, orders.createdAt, orders.metodePembayaran, orders.buktiPembayaran');
+		$this->db->join('keranjang', 'keranjang.id = orders.idKeranjang', 'inner');
+		$this->db->join('menu', 'menu.id = keranjang.idMenu', 'inner');
+
+		$this->db->where($where);
+
+		$this->db->order_by('menu.nama_menu', 'asc');
+
+		return $this->db->get('orders')->result();
+	}
+
+	public function getListProgres($where)
+	{
+		$this->db->where($where);
+		$this->db->order_by('createdAt', 'desc');
+
+		return $this->db->get('progres')->result();
 	}
 }
 

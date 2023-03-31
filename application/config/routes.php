@@ -78,3 +78,10 @@ $route['checkout'] = 'frontend/checkout';
 $route['addToCart']      = 'frontend/addToCart';
 $route['deleteCart']     = 'frontend/deleteCart';
 $route['updateQuantity'] = 'frontend/updateQuantity';
+$route['placeOrder']     = 'frontend/placeOrder';
+$route['orders']         = 'frontend/orders';
+$route['getListProduct'] = 'frontend/getListProduct';
+
+$route['print/(:any)'] = 'frontend/print/$1';
+$route['uploadBerkas'] = 'frontend/uploadBerkas';
+$route['getListProgres'] = 'frontend/getListProgres';

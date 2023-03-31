@@ -42,20 +42,20 @@
 				<form action="<?= base_url('addToCart'); ?>" method="POST">
 					<div class="d-flex align-items-center mb-4 pt-2">
 						<input type="hidden" name="idMenu" value="<?= $product->id; ?>">
-						<div class="input-group quantity mr-3" style="width: 130px;">
+						<div class="input-group mr-3" style="width: 130px;">
 							<div class="input-group-btn">
-								<button type="button" class="btn btn-primary btn-minus">
+								<button type="button" class="btn btn-primary" id="btn_minus">
 									<i class="fa fa-minus"></i>
 								</button>
 							</div>
-							<input type="text" class="form-control bg-secondary text-center" value="1" name="total">
+							<input type="text" class="form-control bg-secondary text-center" value="1" name="total" id="input_total">
 							<div class="input-group-btn">
-								<button type="button" class="btn btn-primary btn-plus">
+								<button type="button" class="btn btn-primary" id="btn_plus">
 									<i class="fa fa-plus"></i>
 								</button>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+						<button type="submit" class="btn btn-primary px-3" id="add-to-cart"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
 					</div>
 				</form>
 			<?php endif; ?>
@@ -141,22 +141,22 @@
 	<div class="row px-xl-5">
 		<div class="col">
 			<div class="owl-carousel related-carousel">
-				<?php foreach ($products as $product) : ?>
+				<?php foreach ($products as $pro) : ?>
 					<div class="card product-item border-0">
 						<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-							<img class="img-fluid w-100" src="<?= base_url('upload/gambar/' . gambar($product->id)); ?>" alt="<?= $product->nama_menu; ?>">
+							<img class="img-fluid w-100" src="<?= base_url('upload/gambar/' . gambar($pro->id)); ?>" alt="<?= $pro->nama_menu; ?>">
 						</div>
 						<div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-							<h6 class="text-truncate mb-3"><?= $product->nama_menu; ?></h6>
+							<h6 class="text-truncate mb-3"><?= $pro->nama_menu; ?></h6>
 							<div class="d-flex justify-content-center">
-								<h6><?= 'Rp. ' . number_format($product->harga, 0, ',', '.'); ?></h6>
+								<h6><?= 'Rp. ' . number_format($pro->harga, 0, ',', '.'); ?></h6>
 							</div>
 						</div>
 						<div class="card-footer d-flex justify-content-between bg-light border">
-							<a href="<?= base_url('detail/' . $product->id); ?>" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-							<?php if ($product->stok > 0) : ?>
+							<a href="<?= base_url('detail/' . $pro->id); ?>" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+							<?php if ($pro->stok > 0) : ?>
 								<form action="<?= base_url('addToCart'); ?>" method="POST">
-									<input type="hidden" name="idMenu" value="<?= $product->id; ?>">
+									<input type="hidden" name="idMenu" value="<?= $pro->id; ?>">
 									<button type="submit" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</button>
 								</form>
 							<?php else : ?>
@@ -170,3 +170,71 @@
 	</div>
 </div>
 <!-- Products End -->
+
+<script>
+	const stok = <?php echo $product->stok; ?>;
+	let totalSebelumnya = 1;
+
+	$('#btn_plus').click(function() {
+		let id = $(this).data('id');
+
+		let tot = $('#input_total').val();
+		let total = parseInt(tot) + 1;
+
+		if (total > stok) {
+			total = stok;
+			toastr.warning('Orders cannot exceed stock');
+
+			$('#input_total').val(total);
+			$('#add-to-cart').prop('disabled', false);
+
+			return 0;
+		}
+
+		$('#input_total').val(total);
+		$('#add-to-cart').prop('disabled', false);
+	});
+
+	$('#btn_minus').click(function() {
+		let id = $(this).data('id');
+
+		let tot = $('#input_total').val();
+		let total = parseInt(tot) - 1;
+
+		if (total == 0) {
+			total = 1;
+			toastr.warning('The minimum order cannot be less than one');
+
+			$('#add-to-cart').prop('disabled', false);
+
+			return 0;
+		}
+
+		$('#input_total').val(total);
+		$('#add-to-cart').prop('disabled', false);
+	});
+
+	$('#input_total').change(function() {
+		let total = $(this).val();
+
+		if (total > stok) {
+			total = stok;
+			toastr.warning('Orders cannot exceed stock');
+
+			$('#input_total').val(total);
+
+			$('#add-to-cart').prop('disabled', true);
+		}
+
+		if (total == '') {
+			$('#input_total').val(totalSebelumnya);
+		}
+
+		$('#add-to-cart').prop('disabled', false);
+	});
+
+	$('#input_total').click(function() {
+		totalSebelumnya = $(this).val();
+		$('#add-to-cart').prop('disabled', true);
+	});
+</script>

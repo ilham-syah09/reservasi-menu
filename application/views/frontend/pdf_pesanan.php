@@ -156,11 +156,11 @@
 
 			<tr class="item">
 				<td>Full Name</td>
-				<td><?= $pesanan[0]->name; ?></td>
+				<td><?= $this->dt_user->name; ?></td>
 			</tr>
 			<tr class="details">
 				<td>Nomor HandPhone</td>
-				<td><?= $pesanan[0]->noHp; ?></td>
+				<td><?= $this->dt_user->noHp; ?></td>
 			</tr>
 		</table>
 		<table>

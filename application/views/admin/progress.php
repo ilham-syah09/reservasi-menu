@@ -289,8 +289,6 @@
                     $('#tampil-progres').removeClass('d-none');
                     $('.tr_isi-progres').remove();
 
-                    console.log(res);
-
                     if (res.data != null) {
                         $(res.data).each(function(i) {
                             $("#tabel-progres").append(

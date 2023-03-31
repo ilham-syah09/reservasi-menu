@@ -93,13 +93,13 @@
                         <div class="navbar-nav mr-auto py-0">
                             <a href="<?= base_url(); ?>" class="nav-item nav-link <?= ($this->u1 == 'home') ? 'active' : ''; ?>">Home</a>
                             <a href="<?= base_url('shop'); ?>" class="nav-item nav-link <?= ($this->u1 == 'shop') ? 'active' : ''; ?>">Shop</a>
-                            <a href=" javascript:void(0)" class="nav-item nav-link <?= ($this->u1 == 'detail') ? 'active' : ''; ?>">Shop Detail</a>
+                            <a href="javascript:void(0)" class="nav-item nav-link <?= ($this->u1 == 'detail') ? 'active' : ''; ?>">Shop Detail</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle <?= ($this->u1 == 'cart' || $this->u1 == 'checkout' || $this->u1 == 'order') ? 'active' : ''; ?>" data-toggle="dropdown">Orders</a>
+                                <a href="javascript:void(0)" class="nav-link dropdown-toggle <?= ($this->u1 == 'cart' || $this->u1 == 'checkout' || $this->u1 == 'order') ? 'active' : ''; ?>" data-toggle="dropdown">Orders</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="<?= base_url('cart'); ?>" class="dropdown-item">Shopping Cart</a>
-                                    <a href="<?= base_url('checkout'); ?>" class="dropdown-item">Checkout</a>
-                                    <a href="<?= base_url('orders'); ?>" class="dropdown-item">List Orders</a>
+                                    <a href="<?= base_url('cart'); ?>" class="dropdown-item <?= ($this->u1 == 'cart') ? 'text-primary' : ''; ?>">Shopping Cart</a>
+                                    <a href="javascript:void(0)" class="dropdown-item <?= ($this->u1 == 'checkout') ? 'text-primary' : ''; ?>">Checkout</a>
+                                    <a href="<?= base_url('orders'); ?>" class="dropdown-item <?= ($this->u1 == 'orders') ? 'text-primary' : ''; ?>">List Orders</a>
                                 </div>
                             </div>
                             <a href="<?= base_url('contact'); ?>" class="nav-item nav-link <?= ($this->u1 == 'contact') ? 'active' : ''; ?>">Contact</a>

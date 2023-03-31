@@ -147,6 +147,9 @@ class Frontend extends CI_Controller
             'products' => $this->front->getProductRandom($id)
         ];
 
+        // echo json_encode($data['product']);
+        // die;
+
         $this->load->view('frontend/index', $data);
     }
 
@@ -182,10 +185,36 @@ class Frontend extends CI_Controller
 
     public function checkout()
     {
+        $this->_authentication();
+
+        $cart = $this->front->getCart([
+            'keranjang.idUser' => $this->dt_user->id,
+            'keranjang.status' => 0
+        ]);
+
         $data = [
             'title'    => 'Checkout | Citra Bakery',
             'page'     => 'frontend/checkout',
-            'kategori' => $this->front->getKategori()
+            'kategori' => $this->front->getKategori(),
+            'cart'     => $cart
+        ];
+
+        $this->load->view('frontend/index', $data);
+    }
+
+    public function orders()
+    {
+        $this->_authentication();
+
+        $orders = $this->front->getListOrders([
+            'idUser' => $this->dt_user->id
+        ]);
+
+        $data = [
+            'title'    => 'List Orders | Citra Bakery',
+            'page'     => 'frontend/orders',
+            'kategori' => $this->front->getKategori(),
+            'orders'   => $orders
         ];
 
         $this->load->view('frontend/index', $data);
@@ -201,7 +230,8 @@ class Frontend extends CI_Controller
 
         $cek = $this->front->checkCart([
             'idUser' => $this->dt_user->id,
-            'idMenu' => $this->input->post('idMenu')
+            'idMenu' => $this->input->post('idMenu'),
+            'status' => 0
         ]);
 
         if ($cek) {
@@ -240,6 +270,8 @@ class Frontend extends CI_Controller
 
     public function deleteCart()
     {
+        $this->_authentication();
+
         $this->db->where('id', $this->input->post('id'));
         $delete = $this->db->delete('keranjang');
 
@@ -254,8 +286,11 @@ class Frontend extends CI_Controller
 
     public function updateQuantity()
     {
+        $this->_authentication();
+
         $id = $this->input->post('id');
         $total = $this->input->post('total');
+        $harga = $this->input->post('harga');
 
         $data = [
             'total' => $total
@@ -265,14 +300,15 @@ class Frontend extends CI_Controller
         $update = $this->db->update('keranjang', $data);
 
         if ($update) {
-            $total = $this->front->getTotalPrice([
+            $cart = $this->front->getTotalPrice([
                 'keranjang.idUser' => $this->dt_user->id,
                 'keranjang.status' => 0
             ]);
 
             $res = [
-                'status' => true,
-                'total' => 'Rp. ' . number_format($total->total, 0, ',', '.')
+                'status'   => true,
+                'total'    => 'Rp. ' . number_format($cart->total, 0, ',', '.'),
+                'subTotal' => 'Rp. ' . number_format(($total * $harga), 0, ',', '.')
             ];
         } else {
             $res = [
@@ -281,6 +317,149 @@ class Frontend extends CI_Controller
         }
 
         echo json_encode($res);
+    }
+
+    public function placeOrder()
+    {
+        $this->_authentication();
+
+        $alamat = $this->input->post('alamat');
+        $catatan = $this->input->post('catatan');
+        $metodePembayaran = $this->input->post('payment');
+
+        $cart = $this->front->getCart([
+            'keranjang.idUser' => $this->dt_user->id,
+            'keranjang.status' => 0
+        ]);
+
+        $data = [];
+        $idKhusus = $this->dt_user->id . '-' . date('YmdHis');
+
+        foreach ($cart as $c) {
+            $this->db->where('id', $c->id);
+            $this->db->update('keranjang', [
+                'status' => 1
+            ]);
+
+            array_push($data, [
+                'idUser'           => $this->dt_user->id,
+                'idKeranjang'      => $c->id,
+                'alamat'           => $alamat,
+                'catatan'          => $catatan,
+                'metodePembayaran' => $metodePembayaran,
+                'idKhusus'         => $idKhusus
+            ]);
+        }
+
+        $insert = $this->db->insert_batch('orders', $data);
+
+        if ($insert) {
+            $this->session->set_flashdata('toastr-success', 'The product has been successfully ordered');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Product failed to order!!');
+        }
+
+        redirect('orders', 'refresh');
+    }
+
+    public function getListProduct()
+    {
+        $this->_authentication();
+
+        $result = [
+            'data' => $this->front->getListProduct([
+                'orders.idUser' => $this->dt_user->id,
+                'orders.idKhusus' => $this->input->get('idKhusus'),
+            ])
+        ];
+
+        echo json_encode($result);
+    }
+
+    public function print($idKhusus)
+    {
+        $this->_authentication();
+
+        $data = [
+            'pesanan' => $this->front->getListProduct([
+                'orders.idUser' => $this->dt_user->id,
+                'orders.idKhusus' => $idKhusus,
+            ])
+        ];
+
+        $this->load->view('frontend/pdf_pesanan', $data);
+    }
+
+    public function uploadBerkas()
+    {
+        $this->_authentication();
+
+        $gambar = $_FILES['gambar']['name'];
+
+        if ($gambar) {
+            $this->load->library('upload');
+            $config['upload_path']   = './upload/bukti';
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            // $config['max_size']             = 3072; // 3 mb
+            $config['remove_spaces'] = TRUE;
+            $config['detect_mime']   = TRUE;
+            $config['encrypt_name']  = TRUE;
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('gambar')) {
+                $this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+
+                redirect('orders', 'refresh');
+            } else {
+                $upload_data = $this->upload->data();
+
+                $data = [
+                    'buktiPembayaran'  => $upload_data['file_name']
+                ];
+            }
+        } else {
+            $this->session->set_flashdata('toastr-error', 'File cannot be empty');
+
+            redirect('orders', 'refresh');
+        }
+
+        $where = [
+            'idUser' => $this->dt_user->id,
+            'idKhusus' => $this->input->post('idKhusus')
+        ];
+
+        $this->db->where($where);
+        $order = $this->db->get('orders')->row();
+
+        $this->db->where($where);
+        $update = $this->db->update('orders', $data);
+
+        if ($update) {
+            unlink(FCPATH . 'upload/bukti/' . $order->buktiPembayaran);
+            $this->session->set_flashdata('toastr-success', 'File uploaded successfully');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'File failed to upload');
+        }
+
+        redirect('orders', 'refresh');
+    }
+
+    public function getListProgres()
+    {
+        $this->_authentication();
+
+        $progres = $this->front->getListProgres([
+            'idUser'   => $this->dt_user->id,
+            'idKhusus' => $this->input->get('idKhusus'),
+        ]);
+
+        $result = [
+            'data' => ($progres) ? $progres : null
+        ];
+
+        echo json_encode($result);
     }
 
     private function _paging_offset($page, $limit)
