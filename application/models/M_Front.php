@@ -115,7 +115,7 @@ class M_Front extends CI_Model
 
 	public function getListProduct($where)
 	{
-		$this->db->select('menu.nama_menu, menu.harga, keranjang.total, orders.idKhusus, orders.statusPembayaran, orders.createdAt, orders.metodePembayaran, orders.buktiPembayaran');
+		$this->db->select('menu.nama_menu, menu.harga, keranjang.idMenu, keranjang.total, orders.idKhusus, orders.statusPembayaran, orders.createdAt, orders.metodePembayaran, orders.buktiPembayaran');
 		$this->db->join('keranjang', 'keranjang.id = orders.idKeranjang', 'inner');
 		$this->db->join('menu', 'menu.id = keranjang.idMenu', 'inner');
 

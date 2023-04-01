@@ -9,14 +9,23 @@ class Frontend extends CI_Controller
 
         $this->u1 = $this->uri->segment(1);
 
+        $this->load->model('M_Front', 'front');
+
         if (empty($this->session->userdata('log_user'))) {
             $this->dt_user = null;
         } else {
             $this->db->where('id', $this->session->userdata('id'));
             $this->dt_user = $this->db->get('user')->row();
-        }
 
-        $this->load->model('M_Front', 'front');
+            $this->orders = count($this->front->getListOrders([
+                'idUser' => $this->dt_user->id
+            ]));
+
+            $this->cart = count($this->front->getCart([
+                'keranjang.idUser' => $this->dt_user->id,
+                'keranjang.status' => 0
+            ]));
+        }
     }
 
     private function _authentication()

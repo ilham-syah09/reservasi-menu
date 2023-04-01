@@ -42,13 +42,13 @@
                 </a>
             </div>
             <div class="col-lg-9 col-12 text-right">
-                <a href="" class="btn border">
+                <a href="<?= base_url('orders'); ?>" class="btn border">
                     <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge"><?= ($this->dt_user) ? $this->orders : 0; ?></span>
                 </a>
-                <a href="" class="btn border">
+                <a href="<?= base_url('cart'); ?>" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge"><?= ($this->dt_user) ? $this->cart : 0; ?></span>
                 </a>
             </div>
         </div>
