@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 29, 2023 at 03:11 PM
+-- Generation Time: Apr 10, 2023 at 06:48 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -116,8 +116,10 @@ INSERT INTO `keranjang` (`id`, `idUser`, `idMenu`, `total`, `status`, `createdAt
 (4, 5, 9, 4, 1, '2023-03-24 03:00:28', '2023-03-24 05:41:34'),
 (5, 5, 6, 1, 1, '2023-03-24 03:00:24', '2023-03-24 05:41:31'),
 (6, 5, 10, 1, 1, '2023-03-24 03:00:28', '2023-03-24 05:41:34'),
-(8, 3, 8, 1, 0, '2023-03-29 05:31:07', '2023-03-29 08:31:27'),
-(12, 3, 10, 4, 0, '2023-03-29 05:44:02', '2023-03-29 08:31:33');
+(8, 3, 8, 2, 1, '2023-03-29 05:31:07', '2023-03-30 03:05:35'),
+(12, 3, 10, 4, 1, '2023-03-29 05:44:02', '2023-03-30 03:05:35'),
+(14, 3, 8, 1, 0, '2023-03-31 02:08:41', '2023-03-31 03:09:26'),
+(15, 3, 13, 2, 0, '2023-03-31 02:14:05', '2023-03-31 03:09:32');
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,8 @@ CREATE TABLE `orders` (
   `idKeranjang` int(11) NOT NULL,
   `alamat` text NOT NULL,
   `catatan` text NOT NULL,
-  `statusPembayaran` int(1) NOT NULL,
+  `metodePembayaran` int(1) NOT NULL,
+  `statusPembayaran` int(1) NOT NULL DEFAULT 0,
   `buktiPembayaran` text DEFAULT NULL,
   `idKhusus` varchar(29) NOT NULL,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -176,11 +179,35 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `idUser`, `idKeranjang`, `alamat`, `catatan`, `statusPembayaran`, `buktiPembayaran`, `idKhusus`, `createdAt`, `updatedAt`) VALUES
-(1, 6, 1, 'Tegal umahe ilham', 'Jangan pake lama mas.. laper', 1, 'sample-tf.png', '3-20230321205212', '2023-03-21 13:52:15', '2023-03-29 03:49:26'),
-(2, 6, 2, 'Tegal umahe ilham', 'Jangan pake lama mas.. laper', 1, 'sample-tf.png', '3-20230321205212', '2023-03-21 13:52:15', '2023-03-29 03:49:28'),
-(3, 5, 3, 'Nang umah', 'Jangan pake lama mas.. laper', 0, NULL, '5-20230324102011', '2023-03-24 03:01:18', '2023-03-24 03:31:22'),
-(4, 5, 4, 'Nang umah', 'Jangan pake lama mas.. laper', 0, NULL, '5-20230324102011', '2023-03-24 03:02:55', '2023-03-24 03:31:22');
+INSERT INTO `orders` (`id`, `idUser`, `idKeranjang`, `alamat`, `catatan`, `metodePembayaran`, `statusPembayaran`, `buktiPembayaran`, `idKhusus`, `createdAt`, `updatedAt`) VALUES
+(1, 6, 1, 'Tegal umahe ilham', 'Jangan pake lama mas.. laper', 2, 1, 'sample-tf.png', '3-20230321205212', '2023-03-21 13:52:15', '2023-03-30 02:05:16'),
+(2, 6, 2, 'Tegal umahe ilham', 'Jangan pake lama mas.. laper', 2, 1, 'sample-tf.png', '3-20230321205212', '2023-03-21 13:52:15', '2023-03-30 02:05:18'),
+(3, 5, 3, 'Nang umah', 'Jangan pake lama mas.. laper', 2, 0, NULL, '5-20230324102011', '2023-03-24 03:01:18', '2023-03-30 02:05:20'),
+(4, 5, 4, 'Nang umah', 'Jangan pake lama mas.. laper', 2, 0, NULL, '5-20230324102011', '2023-03-24 03:02:55', '2023-03-30 02:05:21'),
+(5, 3, 8, 'Kartini, Jl. Code Solution No. 1, Kota Tegal', 'Nasi goreng pedas 1, sedang 1', 1, 1, 'fbe81ae609fbafab66adfae7e3042ab0.png', '3-20230330100535', '2023-03-30 03:05:35', '2023-03-30 07:56:06'),
+(6, 3, 12, 'Kartini, Jl. Code Solution No. 1, Kota Tegal', 'Nasi goreng pedas 1, sedang 1', 1, 1, 'fbe81ae609fbafab66adfae7e3042ab0.png', '3-20230330100535', '2023-03-30 03:05:35', '2023-03-30 07:56:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pesan`
+--
+
+CREATE TABLE `pesan` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `subject` varchar(100) NOT NULL,
+  `message` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pesan`
+--
+
+INSERT INTO `pesan` (`id`, `name`, `email`, `subject`, `message`, `createdAt`) VALUES
+(1, 'il', 'il@gmail.com', 'kjg', 'll', '2023-04-10 02:30:45');
 
 -- --------------------------------------------------------
 
@@ -203,7 +230,8 @@ CREATE TABLE `progres` (
 
 INSERT INTO `progres` (`id`, `idUser`, `idKhusus`, `status`, `createdAt`, `updatedAt`) VALUES
 (1, 6, '3-20230321205212', 'Sedang diproses', '2023-03-24 03:50:29', '2023-03-29 03:49:33'),
-(3, 6, '3-20230321205212', 'Sedang diantar', '2023-03-24 04:44:39', '2023-03-29 03:49:36');
+(3, 6, '3-20230321205212', 'Sedang diantar', '2023-03-24 04:44:39', '2023-03-29 03:49:36'),
+(4, 3, '3-20230330100535', 'Sedang diproses', '2023-03-30 07:56:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -215,11 +243,17 @@ CREATE TABLE `review` (
   `id` int(11) NOT NULL,
   `idUser` int(11) NOT NULL,
   `idMenu` int(11) NOT NULL,
-  `komentar` text NOT NULL,
-  `nilai` int(1) NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `rating` int(1) NOT NULL,
+  `review` text NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`id`, `idUser`, `idMenu`, `rating`, `review`, `createdAt`) VALUES
+(1, 3, 10, 4, 'Enak bgt rasanya, ga bikin eneg', '2023-04-10 03:51:08');
 
 -- --------------------------------------------------------
 
@@ -304,6 +338,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `pesan`
+--
+ALTER TABLE `pesan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `progres`
 --
 ALTER TABLE `progres`
@@ -347,7 +387,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -359,19 +399,25 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `pesan`
+--
+ALTER TABLE `pesan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `progres`
 --
 ALTER TABLE `progres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`

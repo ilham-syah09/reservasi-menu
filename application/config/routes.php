@@ -68,12 +68,9 @@ $route['shop/(:any)/(:any)']        = 'frontend/shop/$1/$2';
 $route['shop/(:any)/(:any)/(:any)'] = 'frontend/shop/$1/$2/$3';
 
 $route['detail/(:any)'] = 'frontend/detail/$1';
-
-$route['contact'] = 'frontend/contact';
-
-$route['cart'] = 'frontend/cart';
-
-$route['checkout'] = 'frontend/checkout';
+$route['contact']       = 'frontend/contact';
+$route['cart']          = 'frontend/cart';
+$route['checkout']      = 'frontend/checkout';
 
 $route['addToCart']      = 'frontend/addToCart';
 $route['deleteCart']     = 'frontend/deleteCart';
@@ -82,6 +79,8 @@ $route['placeOrder']     = 'frontend/placeOrder';
 $route['orders']         = 'frontend/orders';
 $route['getListProduct'] = 'frontend/getListProduct';
 
-$route['print/(:any)'] = 'frontend/print/$1';
-$route['uploadBerkas'] = 'frontend/uploadBerkas';
+$route['print/(:any)']   = 'frontend/print/$1';
+$route['uploadBerkas']   = 'frontend/uploadBerkas';
 $route['getListProgres'] = 'frontend/getListProgres';
+$route['message']        = 'frontend/message';
+$route['review']         = 'frontend/review';

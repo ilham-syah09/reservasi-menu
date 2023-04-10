@@ -147,17 +147,29 @@ class Frontend extends CI_Controller
             'idMenu' => $id
         ]);
 
+        $review = $this->front->getReview([
+            'review.idMenu' => $id
+        ]);
+
+        $rating = $this->front->getRating([
+            'idMenu' => $id
+        ]);
+
+        $rating = [
+            'rating' => round($rating->rating, 1),
+            'total' => $rating->total
+        ];
+
         $data = [
             'title'    => 'Shop Detail | Citra Bakery',
             'page'     => 'frontend/detail',
             'kategori' => $this->front->getKategori(),
             'product'  => $product,
             'gambar'   => $gambar,
-            'products' => $this->front->getProductRandom($id)
+            'products' => $this->front->getProductRandom($id),
+            'review'   => $review,
+            'rating'   => $rating
         ];
-
-        // echo json_encode($data['product']);
-        // die;
 
         $this->load->view('frontend/index', $data);
     }
@@ -469,6 +481,86 @@ class Frontend extends CI_Controller
         ];
 
         echo json_encode($result);
+    }
+
+    public function review()
+    {
+        $this->_authentication();
+
+        $chart = $this->front->checkCart([
+            'idUser' => $this->dt_user->id,
+            'idMenu' => $this->input->post('idMenu')
+        ]);
+
+        if (!$chart) {
+            $this->session->set_flashdata('toastr-error', 'Please order this product first!!');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+        }
+
+        if ($this->input->post('rating') == 0 || $this->input->post('rating') == '') {
+            $this->session->set_flashdata('toastr-error', 'Please choose the rating correctly!!');
+            redirect($_SERVER['HTTP_REFERER'], 'refresh');
+        } else {
+            $this->db->where([
+                'idUser' => $this->dt_user->id,
+                'idMenu' => $this->input->post('idMenu')
+            ]);
+
+            $cek = $this->db->get('review')->row();
+
+            if (!$cek) {
+                $data = [
+                    'idUser' => $this->dt_user->id,
+                    'idMenu' => $this->input->post('idMenu'),
+                    'rating' => $this->input->post('rating'),
+                    'review' => $this->input->post('review')
+                ];
+
+                $insert = $this->db->insert('review', $data);
+
+                if ($insert) {
+                    $this->session->set_flashdata('toastr-success', 'Review successfully sent');
+                } else {
+                    $this->session->set_flashdata('toastr-error', 'Review failed to send!!');
+                }
+            } else {
+                $data = [
+                    'rating' => $this->input->post('rating'),
+                    'review' => $this->input->post('review')
+                ];
+
+                $this->db->where('id', $cek->id);
+                $update = $this->db->update('review', $data);
+
+                if ($update) {
+                    $this->session->set_flashdata('toastr-success', 'Review successfully sent');
+                } else {
+                    $this->session->set_flashdata('toastr-error', 'Review failed to send!!');
+                }
+            }
+        }
+
+        redirect($_SERVER['HTTP_REFERER'], 'refresh');
+    }
+
+    public function message()
+    {
+        $data = [
+            'name' => $this->input->post('name'),
+            'email' => $this->input->post('email'),
+            'subject' => $this->input->post('subject'),
+            'message' => $this->input->post('message')
+        ];
+
+        $insert = $this->db->insert('pesan', $data);
+
+        if ($insert) {
+            $this->session->set_flashdata('toastr-success', 'Message successfully sent');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Message failed to send!!');
+        }
+
+        redirect('contact', 'refresh');
     }
 
     private function _paging_offset($page, $limit)

@@ -225,8 +225,8 @@
 								"<tr class='tr_isi'>" +
 								"<td class='text-center'>" + (i + 1) + "</td>" +
 								"<td>" + res.data[i].nama_menu + "</td>" +
-								"<td>" + res.data[i].harga + "</td>" +
 								"<td>" + res.data[i].total + "</td>" +
+								"<td>" + rupiah.format(res.data[i].harga) + "</td>" +
 								"<td>" + rupiah.format(harga) + "</td>" +
 								`<td><a href="<?= base_url('detail/'); ?>${res.data[i].idMenu}" class="badge badge-info"><i class="fa fa-eye"></a></td>` +
 								"<tr>"

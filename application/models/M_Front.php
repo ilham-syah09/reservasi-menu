@@ -133,6 +133,25 @@ class M_Front extends CI_Model
 
 		return $this->db->get('progres')->result();
 	}
+
+	public function getReview($where)
+	{
+		$this->db->select('review.*, user.name, user.image');
+		$this->db->join('user', 'user.id = review.idUser', 'inner');
+
+		$this->db->where($where);
+		$this->db->order_by('review.createdAt', 'desc');
+
+		return $this->db->get('review')->result();
+	}
+
+	public function getRating($where)
+	{
+		$this->db->select('AVG(rating) as rating, COUNT(id) as total');
+		$this->db->where($where);
+
+		return $this->db->get('review')->row();
+	}
 }
 
 /* End of file M_Front.php */
