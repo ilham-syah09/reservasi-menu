@@ -98,6 +98,7 @@ class Auth extends CI_Controller
             $this->db->insert('user_token', $user_token);
 
             $this->_sendEmail($token, 'verify');
+
             $this->session->set_flashdata('flash-success', 'Sukses, segera aktivasi akun anda!');
             redirect('auth', 'refresh');
         }
@@ -115,7 +116,7 @@ class Auth extends CI_Controller
         $config['smtp_timeout'] = "5";
         $config['priority'] = 3;
         $config['smtp_user'] = "ilham.xavi44@gmail.com";
-        $config['smtp_pass'] = 'qjsyspmuthcoimug';
+        $config['smtp_pass'] = 'vyfophydgcojgkie';
         $config['crlf'] = "\r\n";
         $config['newline'] = "\r\n";
         $config['wordwrap'] = TRUE;

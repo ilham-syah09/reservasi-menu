@@ -43,7 +43,7 @@
 			<div class="row pb-3">
 				<div class="col-12 pb-1">
 					<div class="row">
-						<div class="col-6">
+						<div class="col-12">
 							<div class="d-flex align-items-center justify-content-between mb-4">
 								<div class="input-group">
 									<input type="text" class="form-control" placeholder="Search by name" id="input-search" value="<?= ($filter != 1 && $filter != 2 && $filter != 3 && $filter != 4) ? $filter : ''; ?>" autocomplete="off">
@@ -58,7 +58,7 @@
 					</div>
 				</div>
 				<?php foreach ($products as $product) : ?>
-					<div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+					<div class="col-lg-4 col-6 pb-1">
 						<div class="card product-item border-0 mb-4">
 							<div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
 								<img class="img-fluid w-100" src="<?= base_url('upload/gambar/' . gambar($product->id)); ?>" alt="<?= $product->nama_menu; ?>">

@@ -53,10 +53,21 @@
                                                 <td><?= $m->stok; ?></td>
                                                 <td><?= $m->harga; ?></td>
                                                 <td>
-                                                    <a href="#" class="badge badge-info stok_btn" data-toggle="modal" data-target="#stokModal" data-id="<?= $m->id; ?>" data-stok="<?= $m->stok; ?>">Stok</a>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a href="#" class="dropdown-item stok_btn" data-toggle="modal" data-target="#stokModal" data-id="<?= $m->id; ?>" data-stok="<?= $m->stok; ?>">Stok</a>
+                                                            <a href="#" class="dropdown-item gambar_btn" data-toggle="modal" data-target="#gambarModal" data-id="<?= $m->id; ?>">Gambar</a>
+                                                            <a href="#" class="dropdown-item edit_btn" data-toggle="modal" data-target="#editMenu" data-id="<?= $m->id; ?>" data-nama_menu="<?= $m->nama_menu; ?>" data-harga="<?= $m->harga; ?>" data-katid="<?= $m->kategori_id; ?>" data-deskripsi="<?= $m->deskripsi; ?>">Edit</a>
+                                                            <a href="<?= base_url('admin/menu/delete/' . $m->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="dropdown-item">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <a href="#" class="badge badge-info stok_btn" data-toggle="modal" data-target="#stokModal" data-id="<?= $m->id; ?>" data-stok="<?= $m->stok; ?>">Stok</a>
                                                     <a href="#" class="badge badge-primary gambar_btn" data-toggle="modal" data-target="#gambarModal" data-id="<?= $m->id; ?>">Gambar</a>
                                                     <a href="#" class="badge badge-warning edit_btn" data-toggle="modal" data-target="#editMenu" data-id="<?= $m->id; ?>" data-nama_menu="<?= $m->nama_menu; ?>" data-harga="<?= $m->harga; ?>" data-katid="<?= $m->kategori_id; ?>" data-deskripsi="<?= $m->deskripsi; ?>">Edit</a>
-                                                    <a href="<?= base_url('admin/menu/delete/' . $m->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a>
+                                                    <a href="<?= base_url('admin/menu/delete/' . $m->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a> -->
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
