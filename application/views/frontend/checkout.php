@@ -12,11 +12,11 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Mobile No</label>
-							<input class="form-control" name="noHp" readonly type="text" value="<?= $this->dt_user->noHp; ?>">
+							<input class="form-control" name="noHp" type="text" value="<?= $this->dt_user->noHp; ?>" readonly>
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Address</label>
-							<textarea name="alamat" cols="30" rows="5" class="form-control"></textarea>
+							<textarea name="alamat" cols="30" rows="5" class="form-control" required></textarea>
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Note</label>

@@ -174,21 +174,21 @@
 				<tr>
 					<td>Barcode</td>
 					<td>
-						<img width="100" src="<?= base_url('upload/gambar/sample-qris.png'); ?>" alt="Code QR">
+						<img width="300" src="<?= base_url('upload/gambar/sample-qris.png'); ?>" alt="Code QR">
 					</td>
 				</tr>
 			<?php else : ?>
 				<tr>
-					<td>BSI</td>
-					<td>12345678</td>
+					<td>BRI</td>
+					<td>789301005602533</td>
 				</tr>
 				<tr>
-					<td>BRI</td>
-					<td>12345678</td>
+					<td>BCA</td>
+					<td>0471677832</td>
 				</tr>
 				<tr>
 					<td>BNI</td>
-					<td>12345678</td>
+					<td>1220892311</td>
 				</tr>
 			<?php endif; ?>
 		</table>

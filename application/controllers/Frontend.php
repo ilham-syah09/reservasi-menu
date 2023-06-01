@@ -612,6 +612,106 @@ class Frontend extends CI_Controller
 
         return $this->pagination->create_links();
     }
+
+    public function profile()
+    {
+        $data = [
+            'title'    => 'Profile | Citra Bakery',
+            'page'     => 'frontend/profile',
+        ];
+
+        $this->load->view('frontend/index', $data);
+    }
+
+    public function changeProfile()
+    {
+        $img = $_FILES['image']['name'];
+
+        if ($img) {
+            $config['upload_path']      = 'upload/profile';
+            $config['allowed_types']    = 'jpg|jpeg|png';
+            $config['max_size']         = 2000;
+            $config['remove_spaces']    = TRUE;
+            $config['encrypt_name']     = TRUE;
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('image')) {
+                $this->session->set_flashdata('toastr-error', $this->upload->display_errors());
+                redirect('profile');
+            } else {
+                $upload_data = $this->upload->data();
+                $previmage = $this->input->post('previmage');
+
+                $data = [
+                    'name'  => $this->input->post('name'),
+                    'noHp'  => $this->input->post('noHp'),
+                    'alamat'  => $this->input->post('alamat'),
+                    'image'     => $upload_data['file_name']
+                ];
+
+                $this->db->where('id', $this->dt_user->id);
+                $insert = $this->db->update('user', $data);
+
+                if ($insert) {
+                    if ($previmage != 'default.png') {
+                        unlink(FCPATH . 'upload/profile/' . $previmage);
+                    }
+                    $this->session->set_flashdata('toastr-success', 'success !');
+                    redirect('profile');
+                } else {
+                    $this->session->set_flashdata('toastr-error', 'failed!');
+                    redirect('profile');
+                }
+            }
+        } else {
+            $data = [
+                'name'  => $this->input->post('name'),
+                'noHp'  => $this->input->post('noHp'),
+                'alamat'  => $this->input->post('alamat'),
+            ];
+
+            $this->db->where('id', $this->dt_user->id);
+            $insert = $this->db->update('user', $data);
+
+            if ($insert) {
+                $this->session->set_flashdata('toastr-success', 'success !');
+                redirect('profile');
+            } else {
+                $this->session->set_flashdata('toastr-error', 'failed!');
+                redirect('profile');
+            }
+        }
+    }
+
+    public function changePassword()
+    {
+        $current_password = $this->input->post('current_password');
+
+        if (password_verify($current_password, $this->dt_user->password)) {
+            $this->form_validation->set_rules('password', 'New Password', 'trim|required|matches[retype_password]');
+            $this->form_validation->set_rules('retype_password', 'Retype New Password', 'trim|required|matches[password]');
+
+
+            if ($this->form_validation->run() == TRUE) {
+                $data = [
+                    'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT)
+                ];
+
+                $this->db->where('id', $this->dt_user->id);
+                $this->db->update('user', $data);
+                $this->session->set_flashdata('toastr-success', 'Success! Your Password Changed!');
+                redirect('profile');
+            } else {
+                $this->session->set_flashdata('toastr-error', 'Failed! Password Dont Match!');
+                redirect('profile');
+            }
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Failed! Wrong Current Password');
+            redirect('profile');
+        }
+    }
 }
 
   /* End of file Frontend.php */

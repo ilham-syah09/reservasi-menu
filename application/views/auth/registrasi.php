@@ -1,6 +1,6 @@
 <div class="register-box">
     <div class="register-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html"><b>CITRA BAKERY</a>
     </div>
 
     <div class="card">

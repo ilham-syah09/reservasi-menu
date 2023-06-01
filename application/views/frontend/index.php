@@ -103,6 +103,8 @@
                                 </div>
                             </div>
                             <a href="<?= base_url('contact'); ?>" class="nav-item nav-link <?= ($this->u1 == 'contact') ? 'active' : ''; ?>">Contact</a>
+
+                            <a href="<?= base_url('profile'); ?>" class="nav-item nav-link <?= ($this->u1 == 'profile') ? 'active' : ''; ?>">Profile</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <?php if ($this->dt_user == null) : ?>
@@ -146,7 +148,9 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
+
     <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script src="<?= base_url(); ?>/assets/frontend/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url(); ?>/assets/frontend/lib/easing/easing.min.js"></script>
     <script src="<?= base_url(); ?>/assets/frontend/lib/owlcarousel/owl.carousel.min.js"></script>

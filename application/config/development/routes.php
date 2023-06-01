@@ -71,6 +71,7 @@ $route['detail/(:any)'] = 'frontend/detail/$1';
 $route['contact']       = 'frontend/contact';
 $route['cart']          = 'frontend/cart';
 $route['checkout']      = 'frontend/checkout';
+$route['profile']       = 'frontend/profile';
 
 $route['addToCart']      = 'frontend/addToCart';
 $route['deleteCart']     = 'frontend/deleteCart';
@@ -84,3 +85,5 @@ $route['uploadBerkas']   = 'frontend/uploadBerkas';
 $route['getListProgres'] = 'frontend/getListProgres';
 $route['message']        = 'frontend/message';
 $route['review']         = 'frontend/review';
+$route['changeProfile']  = 'frontend/changeProfile';
+$route['changePassword']  = 'frontend/changePassword';

@@ -1,5 +1,8 @@
 <div class="login-box">
     <!-- /.login-logo -->
+    <div class="register-logo">
+        <a href="../../index2.html"><b>CITRA BAKERY</a>
+    </div>
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <h4>Form Login</h4>

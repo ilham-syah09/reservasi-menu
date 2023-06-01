@@ -99,7 +99,7 @@ class Auth extends CI_Controller
 
             $this->_sendEmail($token, 'verify');
 
-            $this->session->set_flashdata('flash-success', 'Sukses, segera aktivasi akun anda!');
+            $this->session->set_flashdata('toastr-success', 'Sukses, segera aktivasi akun anda!');
             redirect('auth', 'refresh');
         }
     }
@@ -115,13 +115,13 @@ class Auth extends CI_Controller
         $config['smtp_port'] = "465";
         $config['smtp_timeout'] = "5";
         $config['priority'] = 3;
-        $config['smtp_user'] = "ilham.xavi44@gmail.com";
-        $config['smtp_pass'] = 'vyfophydgcojgkie';
+        $config['smtp_user'] = "hazelnutbanget@gmail.com";
+        $config['smtp_pass'] = 'mvwqlppilwrvcmbw';
         $config['crlf'] = "\r\n";
         $config['newline'] = "\r\n";
         $config['wordwrap'] = TRUE;
         $this->email->initialize($config);
-        $this->email->from($config['smtp_user'], 'Engineer 367');
+        $this->email->from($config['smtp_user'], 'Citra Bakery');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'verify') {
@@ -161,7 +161,7 @@ class Auth extends CI_Controller
 
                     $this->db->delete('user_token', ['email' => $email]);
 
-                    $this->session->set_flashdata('flash-success', 'Aktivasi berhasil, anda sudah bisa login!');
+                    $this->session->set_flashdata('toastr-success', 'Aktivasi berhasil, anda sudah bisa login!');
                     redirect('auth', 'refresh');
                 } else {
 

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 10, 2023 at 06:48 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.4.14
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 28 Apr 2023 pada 15.20
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `reservasiMenu`
+-- Database: `reservasimenu`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `gambar`
+-- Struktur dari tabel `gambar`
 --
 
 CREATE TABLE `gambar` (
@@ -36,7 +37,7 @@ CREATE TABLE `gambar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `gambar`
+-- Dumping data untuk tabel `gambar`
 --
 
 INSERT INTO `gambar` (`id`, `idMenu`, `gambar`, `createdAt`, `updatedAt`) VALUES
@@ -60,15 +61,13 @@ INSERT INTO `gambar` (`id`, `idMenu`, `gambar`, `createdAt`, `updatedAt`) VALUES
 (19, 12, '6a7597c7592071fdc5b9dd42fe0f5c8a.jpeg', '2023-03-28 08:00:04', NULL),
 (20, 13, '3b10b3363829c6defc323aed7b8cc313.jpeg', '2023-03-28 08:01:09', NULL),
 (21, 13, 'd5ea094c9e79567b668538094a26fe4d.jpeg', '2023-03-28 08:01:45', NULL),
-(22, 14, 'de5c8dbf6c6507c5c6287a4e891021b1.jpeg', '2023-03-28 08:43:25', NULL),
-(23, 14, '885434a354c25860fecd53406c7c2b7d.jpeg', '2023-03-28 08:44:07', NULL),
 (24, 15, '20fe4a3d74350188031a328e9d66c8a1.jpeg', '2023-03-28 08:48:40', NULL),
 (25, 15, '487c4f11ad5a8c34db95cacb9426984c.jpeg', '2023-03-28 08:49:11', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kategori`
+-- Struktur dari tabel `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -80,7 +79,7 @@ CREATE TABLE `kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kategori`
+-- Dumping data untuk tabel `kategori`
 --
 
 INSERT INTO `kategori` (`id`, `kategori`, `gambar`, `createdAt`, `updatedAt`) VALUES
@@ -92,7 +91,7 @@ INSERT INTO `kategori` (`id`, `kategori`, `gambar`, `createdAt`, `updatedAt`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `keranjang`
+-- Struktur dari tabel `keranjang`
 --
 
 CREATE TABLE `keranjang` (
@@ -106,7 +105,7 @@ CREATE TABLE `keranjang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `keranjang`
+-- Dumping data untuk tabel `keranjang`
 --
 
 INSERT INTO `keranjang` (`id`, `idUser`, `idMenu`, `total`, `status`, `createdAt`, `updatedAt`) VALUES
@@ -119,12 +118,13 @@ INSERT INTO `keranjang` (`id`, `idUser`, `idMenu`, `total`, `status`, `createdAt
 (8, 3, 8, 2, 1, '2023-03-29 05:31:07', '2023-03-30 03:05:35'),
 (12, 3, 10, 4, 1, '2023-03-29 05:44:02', '2023-03-30 03:05:35'),
 (14, 3, 8, 1, 0, '2023-03-31 02:08:41', '2023-03-31 03:09:26'),
-(15, 3, 13, 2, 0, '2023-03-31 02:14:05', '2023-03-31 03:09:32');
+(15, 3, 13, 2, 0, '2023-03-31 02:14:05', '2023-03-31 03:09:32'),
+(16, 7, 6, 1, 1, '2023-04-10 13:10:11', '2023-04-10 13:10:49');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
+-- Struktur dari tabel `menu`
 --
 
 CREATE TABLE `menu` (
@@ -139,7 +139,7 @@ CREATE TABLE `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `menu`
+-- Dumping data untuk tabel `menu`
 --
 
 INSERT INTO `menu` (`id`, `kategori_id`, `nama_menu`, `deskripsi`, `harga`, `stok`, `createdAt`, `updatedAt`) VALUES
@@ -147,18 +147,17 @@ INSERT INTO `menu` (`id`, `kategori_id`, `nama_menu`, `deskripsi`, `harga`, `sto
 (6, 2, 'Pancake Manis', 'Salah satu makanan yang sangat lembut saat digigit pertama kali. Panekuk atau lebih sering dikenal sebagai pancake merupakan makanan yang terbuat daru beberapa bahan terigu, telur, gula, serta susu.', 19000, 35, '2023-03-20 08:34:30', '2023-03-29 02:02:03'),
 (7, 2, 'Lemper', 'Makanan tradisional khas Masyarakat Jawa yang terbuat dari beras ketan, biasanya berisi abon atau cincangan daging ayam dan dibungkus dengan daun pisang.', 1000, 135, '2023-03-20 08:34:30', '2023-03-29 03:21:50'),
 (8, 5, 'Nasi Goreng', 'Sajian nasi yang digoreng dalam sebuah wajan atau penggorengan yang menghasilkan cita rasa berbeda karena dicampur dengan bumbu-bumbu seperti garam, bawang putih, bawang merah, merica, rempah-rempah tertentu dan kecap manis. Selain itu, ditambahkan bahan-bahan pelengkap seperti telur, sayur-sayuran, makanan laut, atau daging.', 26000, 40, '2023-03-20 08:57:03', '2023-03-29 02:01:55'),
-(9, 6, 'Teh Manis', 'Minuman yang terbuat dari larutan teh yang biasanya diberi gula tebu atau pemanis, sebelum minuman ini siap disajikan.', 5000, 0, '2023-03-21 13:47:29', '2023-03-29 04:03:58'),
+(9, 6, 'Teh Manis', 'Minuman yang terbuat dari larutan teh yang biasanya diberi gula tebu atau pemanis, sebelum minuman ini siap disajikan.', 5000, 100, '2023-03-21 13:47:29', '2023-04-10 16:15:27'),
 (10, 6, 'Ice Cream', 'Sebuah makanan beku yang dibuat dari produk susu seperti krim, lalu dicampur dengan perasa dan pemanis buatan ataupun alami.', 12000, 56, '2023-03-21 13:47:56', '2023-03-26 14:48:33'),
 (11, 2, 'Roti Panggang', 'Roti panggang yang enak dengan baluran coklat keju yang melimpah', 45000, 14, '2023-03-28 07:56:10', '2023-03-29 02:01:42'),
-(12, 5, 'Steak Barbeque', 'Steak panggang mantap, ', 98000, 12, '2023-03-28 07:58:59', '2023-03-29 02:01:36'),
-(13, 6, 'Coffe', 'Ngopi disit ben waleh', 54000, 200, '2023-03-28 08:00:42', '2023-03-28 08:00:47'),
-(14, 6, 'Beer', 'Mendem li enak gaes', 56000, 239, '2023-03-28 08:43:04', '2023-03-29 02:01:02'),
-(15, 4, 'Waffle', 'Waffle coklat rasanya mantap coy', 73000, 30, '2023-03-28 08:48:04', '2023-03-29 02:01:17');
+(12, 5, 'Steak Barbeque', 'Steak panggang mantap', 98000, 12, '2023-03-28 07:58:59', '2023-04-10 15:56:20'),
+(13, 6, 'Coffe', 'Coffe robusta', 54000, 200, '2023-03-28 08:00:42', '2023-04-10 13:24:53'),
+(15, 4, 'Waffle', 'Waffle coklat rasanya mantap', 73000, 70, '2023-03-28 08:48:04', '2023-04-10 15:56:09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Struktur dari tabel `orders`
 --
 
 CREATE TABLE `orders` (
@@ -176,7 +175,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `orders`
+-- Dumping data untuk tabel `orders`
 --
 
 INSERT INTO `orders` (`id`, `idUser`, `idKeranjang`, `alamat`, `catatan`, `metodePembayaran`, `statusPembayaran`, `buktiPembayaran`, `idKhusus`, `createdAt`, `updatedAt`) VALUES
@@ -185,12 +184,13 @@ INSERT INTO `orders` (`id`, `idUser`, `idKeranjang`, `alamat`, `catatan`, `metod
 (3, 5, 3, 'Nang umah', 'Jangan pake lama mas.. laper', 2, 0, NULL, '5-20230324102011', '2023-03-24 03:01:18', '2023-03-30 02:05:20'),
 (4, 5, 4, 'Nang umah', 'Jangan pake lama mas.. laper', 2, 0, NULL, '5-20230324102011', '2023-03-24 03:02:55', '2023-03-30 02:05:21'),
 (5, 3, 8, 'Kartini, Jl. Code Solution No. 1, Kota Tegal', 'Nasi goreng pedas 1, sedang 1', 1, 1, 'fbe81ae609fbafab66adfae7e3042ab0.png', '3-20230330100535', '2023-03-30 03:05:35', '2023-03-30 07:56:06'),
-(6, 3, 12, 'Kartini, Jl. Code Solution No. 1, Kota Tegal', 'Nasi goreng pedas 1, sedang 1', 1, 1, 'fbe81ae609fbafab66adfae7e3042ab0.png', '3-20230330100535', '2023-03-30 03:05:35', '2023-03-30 07:56:06');
+(6, 3, 12, 'Kartini, Jl. Code Solution No. 1, Kota Tegal', 'Nasi goreng pedas 1, sedang 1', 1, 1, 'fbe81ae609fbafab66adfae7e3042ab0.png', '3-20230330100535', '2023-03-30 03:05:35', '2023-03-30 07:56:06'),
+(7, 7, 16, 'Jalan tanjung pinggire rel', 'gapake lama', 2, 1, '7edf5a0f52ccd3a6b1d91e192779a18c.jpg', '7-20230410201049', '2023-04-10 13:10:49', '2023-04-10 13:16:33');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pesan`
+-- Struktur dari tabel `pesan`
 --
 
 CREATE TABLE `pesan` (
@@ -203,7 +203,7 @@ CREATE TABLE `pesan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pesan`
+-- Dumping data untuk tabel `pesan`
 --
 
 INSERT INTO `pesan` (`id`, `name`, `email`, `subject`, `message`, `createdAt`) VALUES
@@ -212,7 +212,7 @@ INSERT INTO `pesan` (`id`, `name`, `email`, `subject`, `message`, `createdAt`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `progres`
+-- Struktur dari tabel `progres`
 --
 
 CREATE TABLE `progres` (
@@ -225,18 +225,21 @@ CREATE TABLE `progres` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `progres`
+-- Dumping data untuk tabel `progres`
 --
 
 INSERT INTO `progres` (`id`, `idUser`, `idKhusus`, `status`, `createdAt`, `updatedAt`) VALUES
 (1, 6, '3-20230321205212', 'Sedang diproses', '2023-03-24 03:50:29', '2023-03-29 03:49:33'),
 (3, 6, '3-20230321205212', 'Sedang diantar', '2023-03-24 04:44:39', '2023-03-29 03:49:36'),
-(4, 3, '3-20230330100535', 'Sedang diproses', '2023-03-30 07:56:06', NULL);
+(4, 3, '3-20230330100535', 'Sedang diproses', '2023-03-30 07:56:06', NULL),
+(5, 7, '7-20230410201049', 'Sedang diproses', '2023-04-10 13:16:33', NULL),
+(6, 7, '7-20230410201049', 'Sedang diantar', '2023-04-10 13:17:03', NULL),
+(7, 7, '7-20230410201049', 'Sudah diterima pembeli', '2023-04-10 13:17:24', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Struktur dari tabel `review`
 --
 
 CREATE TABLE `review` (
@@ -249,16 +252,17 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `review`
+-- Dumping data untuk tabel `review`
 --
 
 INSERT INTO `review` (`id`, `idUser`, `idMenu`, `rating`, `review`, `createdAt`) VALUES
-(1, 3, 10, 4, 'Enak bgt rasanya, ga bikin eneg', '2023-04-10 03:51:08');
+(1, 3, 10, 4, 'Enak bgt rasanya, ga bikin eneg', '2023-04-10 03:51:08'),
+(4, 7, 6, 5, 'Enak nemen yakin sung', '2023-04-10 13:21:16');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -274,19 +278,17 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `noHp`, `password`, `image`, `role`, `is_active`, `created_at`) VALUES
 (1, 'superadmin', 'superadmin@gmail.com', NULL, '$2y$10$7pyTCt1Y3lkAo4duy7Y8YekrA2.lkYPVVfNMgsEv7HQ3DEMyyiyde', 'default.jpg', 1, 1, '2023-03-07 04:17:36'),
-(3, 'Muhammad Ilham Sahputra', 'codesolution404@gmail.com', '085712340987', '$2y$10$dKrWRYOizqDHLIdmh9sOOeDNK4hZTh7cA5JcwmsRySveS5mzMN/ye', 'default.jpg', 2, 1, '2023-03-07 06:32:24'),
-(5, 'engineer', 'softwareengineering367@gmail.com', '085712340987', '$2y$10$xjFO2jsuYO1.s05DsCWGFuEFNoMUH68jTmRLI0vE9PeHC8/I9XytW', 'default.jpg', 2, 1, '2023-03-07 06:36:20'),
-(6, 'engineer 2', 's2oftwareengineering367@gmail.com', '085712340987', '$2y$10$xjFO2jsuYO1.s05DsCWGFuEFNoMUH68jTmRLI0vE9PeHC8/I9XytW', 'default.jpg', 2, 1, '2023-03-07 06:36:20');
+(7, 'ilham', 'codesolution404@gmail.com', NULL, '$2y$10$atl9EuveVSLtScXs1b/UeevafixtmX2/k8AEekH4ade/HeHt04.Lm', 'default.jpg', 2, 1, '2023-04-10 13:07:46');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_token`
+-- Struktur dari tabel `user_token`
 --
 
 CREATE TABLE `user_token` (
@@ -297,139 +299,132 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_token`
---
-
-INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
-(4, 'codesolution404@gmail.com', 'ZPWUeg29vV4yOKC/c5ZFYqnQMWgGPVU5Gzwk/7uqZeY=', 1678173474);
-
---
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `gambar`
+-- Indeks untuk tabel `gambar`
 --
 ALTER TABLE `gambar`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kategori`
+-- Indeks untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `keranjang`
+-- Indeks untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `menu`
+-- Indeks untuk tabel `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `orders`
+-- Indeks untuk tabel `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pesan`
+-- Indeks untuk tabel `pesan`
 --
 ALTER TABLE `pesan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `progres`
+-- Indeks untuk tabel `progres`
 --
 ALTER TABLE `progres`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `review`
+-- Indeks untuk tabel `review`
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user_token`
+-- Indeks untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `gambar`
+-- AUTO_INCREMENT untuk tabel `gambar`
 --
 ALTER TABLE `gambar`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `kategori`
+-- AUTO_INCREMENT untuk tabel `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `keranjang`
+-- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `menu`
+-- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `pesan`
+-- AUTO_INCREMENT untuk tabel `pesan`
 --
 ALTER TABLE `pesan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `progres`
+-- AUTO_INCREMENT untuk tabel `progres`
 --
 ALTER TABLE `progres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `review`
+-- AUTO_INCREMENT untuk tabel `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `user_token`
+-- AUTO_INCREMENT untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
