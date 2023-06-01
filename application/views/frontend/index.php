@@ -104,7 +104,9 @@
                             </div>
                             <a href="<?= base_url('contact'); ?>" class="nav-item nav-link <?= ($this->u1 == 'contact') ? 'active' : ''; ?>">Contact</a>
 
-                            <a href="<?= base_url('profile'); ?>" class="nav-item nav-link <?= ($this->u1 == 'profile') ? 'active' : ''; ?>">Profile</a>
+                            <?php if ($this->session->userdata('log_user')) : ?>
+                                <a href="<?= base_url('profile'); ?>" class="nav-item nav-link <?= ($this->u1 == 'profile') ? 'active' : ''; ?>">profile</a>
+                            <?php endif; ?>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <?php if ($this->dt_user == null) : ?>
