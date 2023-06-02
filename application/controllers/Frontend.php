@@ -655,7 +655,7 @@ class Frontend extends CI_Controller
                 $insert = $this->db->update('user', $data);
 
                 if ($insert) {
-                    if ($previmage != 'default.png') {
+                    if ($previmage != 'default.jpg') {
                         unlink(FCPATH . 'upload/profile/' . $previmage);
                     }
                     $this->session->set_flashdata('toastr-success', 'success !');
