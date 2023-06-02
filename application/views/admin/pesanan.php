@@ -37,6 +37,7 @@
                                             <th>Alamat</th>
                                             <th>Bukti Bayar</th>
                                             <th>Status Pembayaran</th>
+                                            <th>Tanggal</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -64,6 +65,7 @@
                                                         <span class="badge badge-success">Lunas</span>
                                                     <?php endif; ?>
                                                 </td>
+                                                <td><?= date('d-m-Y', $psn->alamat); ?></td>
                                                 <td>
                                                     <a href="#" class="badge badge-info detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-link="<?= base_url('admin/pesanan/cetak/' . $psn->idUser . '/' . $psn->idKhusus); ?>">Detail</a>
                                                     <a href="#" class="badge badge-danger statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
