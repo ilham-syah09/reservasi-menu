@@ -32,6 +32,7 @@
                                         <tr>
                                             <th class="text-center">#</th>
                                             <th>Nama Pembeli</th>
+                                            <th>Tanggal Pesanan</th>
                                             <th>No HP</th>
                                             <th>Catatan</th>
                                             <th>Alamat</th>
@@ -46,6 +47,7 @@
                                             <tr>
                                                 <td><?= $i + 1; ?></td>
                                                 <td><?= $psn->name; ?></td>
+                                                <td><?= date('d M Y - H:i', strtotime($psn->createdAt)); ?></td>
                                                 <td><?= $psn->noHp; ?></td>
                                                 <td><?= $psn->catatan; ?></td>
                                                 <td><?= $psn->alamat; ?></td>
