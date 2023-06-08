@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
 
+    <link href="<?= base_url('assets/logo/logo.png'); ?>" rel="icon">
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
@@ -88,7 +90,7 @@
 
         <!-- Main Footer -->
         <footer class="main-footer">
-            <strong>Copyright &copy; <?= date('Y'); ?> <a href="<?= base_url(); ?>" target="_blank">Reservasi Menu</a></strong>
+            <strong>Copyright &copy; <?= date('Y'); ?> <a href="<?= base_url(); ?>" target="_blank">Citra Bakery</a></strong>
         </footer>
     </div>
     <!-- ./wrapper -->

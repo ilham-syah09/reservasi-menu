@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href="<?= base_url(); ?>/assets/frontend/img/favicon.ico" rel="icon">
+    <link href="<?= base_url('assets/logo/logo.png'); ?>" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -38,7 +38,7 @@
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
                 <a href="<?= base_url('home'); ?>" class="text-decoration-none">
-                    <h3 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">CB</span>Citra Bakery</h3>
+                    <h3 class="m-0 display-5 font-weight-semi-bold"><img src="<?= base_url('assets/logo/logo.png'); ?>" alt="Citra Bakery" class="img img-circle mr-2" width="80">Citra Bakery</h3>
                 </a>
             </div>
             <div class="col-lg-9 col-12 text-right">
@@ -84,7 +84,7 @@
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <h3 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">CB</span>Citra Bakery</h3>
+                        <h3 class="m-0 display-5 font-weight-semi-bold"><img src="<?= base_url('assets/logo/logo.png'); ?>" alt="Citra Bakery" class="img img-circle mr-2" width="80">Citra Bakery</h3>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
@@ -130,17 +130,17 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <a href="" class="text-decoration-none">
-                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">CB</span>Citra Bakery</h1>
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><img src="<?= base_url('assets/logo/logo.png'); ?>" alt="Citra Bakery" class="img img-circle mr-2" width="120">Citra Bakery</h1>
                 </a>
-                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Jl. Kita Solusi, Kota Tegal, Jawa Tengah</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>admin@citrabakaery.com</p>
-                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>0812 3423 4508</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Jalan Panggung Baru No. 19 Kecamatan Tegal Timur Kota Tegal</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>admin@citrabakery.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>0815 6900 053</p>
             </div>
         </div>
         <div class="row border-top border-light mx-xl-5 py-4">
             <div class="col-md-6 px-xl-0">
                 <p class="mb-md-0 text-center text-md-left text-dark">
-                    &copy; <a class="text-dark font-weight-semi-bold" href="#">Citra Bakery</a>. All Rights Reserved.
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#"> <?= date('Y'); ?> Citra Bakery</a>. All Rights Reserved.
                 </p>
             </div>
         </div>
