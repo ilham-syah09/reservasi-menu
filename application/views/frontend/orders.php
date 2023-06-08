@@ -5,6 +5,8 @@
 			<table class="table table-bordered text-center mb-0">
 				<thead class="bg-secondary text-dark">
 					<tr>
+						<th>Opsi</th>
+						<th>Delivery/ Pick-up Schedule</th>
 						<th>Address</th>
 						<th>Note</th>
 						<th>Action</th>
@@ -13,6 +15,8 @@
 				<tbody>
 					<?php foreach ($orders as $order) : ?>
 						<tr>
+							<td><?= $order->opsi; ?></td>
+							<td><?= date('d M Y', strtotime($order->tanggal)) . ' - ' . $order->jam; ?></td>
 							<td><?= $order->alamat; ?></td>
 							<td><?= $order->catatan; ?></td>
 							<td class="align-middle">
@@ -206,6 +210,7 @@
 				success: function(res) {
 					$('#tampil').removeClass('d-none');
 					$('.tr_isi').remove();
+					$('.tr_ongkir').remove();
 					$('.tr_total').remove();
 
 					if (res.data != null) {
@@ -234,9 +239,19 @@
 						});
 
 						$("#tabel_detail").append(
+							"<tr class='tr_ongkir'>" +
+							"<td colspan='3' class='text-center'>Shipping</td>" +
+							"<td>" + res.data[0].kecamatan + "</td>" +
+							"<td>" + rupiah.format(res.data[0].ongkir) + "</td>" +
+							"<td></td>" +
+							"<tr>"
+						);
+
+						$("#tabel_detail").append(
 							"<tr class='tr_total'>" +
 							"<td colspan='4' class='text-center'>Total</td>" +
-							"<td>" + rupiah.format(totalHarga) + "</td>" +
+							"<td>" + rupiah.format(Number(totalHarga) + Number(res.data[0].ongkir)) + "</td>" +
+							"<td></td>" +
 							"<tr>"
 						);
 					} else {

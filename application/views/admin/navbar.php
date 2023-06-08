@@ -91,6 +91,14 @@
                  </li>
                  <li class="nav-header">Setting</li>
                  <li class="nav-item">
+                     <a href="<?= base_url('admin/ongkir'); ?>" class="nav-link">
+                         <i class="nav-icon fas fa-money-bill"></i>
+                         <p>
+                             Ongkir
+                         </p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
                      <a href="<?= base_url('admin/profile'); ?>" class="nav-link">
                          <i class="nav-icon fas fa-user"></i>
                          <p>

@@ -38,7 +38,7 @@
                                             <th>Alamat</th>
                                             <th>Bukti Bayar</th>
                                             <th>Status Pembayaran</th>
-                                            <th>Tanggal</th>
+                                            <th>Keterangan</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -67,7 +67,7 @@
                                                         <span class="badge badge-success">Lunas</span>
                                                     <?php endif; ?>
                                                 </td>
-                                                <td><?= date('d-m-Y', $psn->alamat); ?></td>
+                                                <td><?= $psn->opsi . ' | ' . date('d M Y', strtotime($psn->tanggal)) . ' - ' . $psn->jam; ?></td>
                                                 <td>
                                                     <a href="#" class="badge badge-info detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-link="<?= base_url('admin/pesanan/cetak/' . $psn->idUser . '/' . $psn->idKhusus); ?>">Detail</a>
                                                     <a href="#" class="badge badge-danger statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
@@ -196,6 +196,7 @@
                 success: function(res) {
                     $('#tampil').removeClass('d-none');
                     $('.tr_isi').remove();
+                    $('.tr_ongkir').remove();
                     $('.tr_total').remove();
 
                     if (res.data != null) {
@@ -223,9 +224,17 @@
                         });
 
                         $("#tabel_detail").append(
+                            "<tr class='tr_ongkir'>" +
+                            "<td colspan='3' class='text-center'>Pengiriman</td>" +
+                            "<td>" + res.data[0].kecamatan + "</td>" +
+                            "<td>" + rupiah.format(res.data[0].ongkir) + "</td>" +
+                            "<tr>"
+                        );
+
+                        $("#tabel_detail").append(
                             "<tr class='tr_total'>" +
                             "<td colspan='4' class='text-center'>Total Bayar</td>" +
-                            "<td>" + rupiah.format(totalHarga) + "</td>" +
+                            "<td>" + rupiah.format(Number(totalHarga) + Number(res.data[0].ongkir)) + "</td>" +
                             "<tr>"
                         );
                     } else {

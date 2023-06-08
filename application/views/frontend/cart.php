@@ -64,10 +64,6 @@
  							<h6 class="font-weight-medium">Subtotal</h6>
  							<h6 class="font-weight-medium" id="subTotal"><?= 'Rp. ' . number_format($total, 0, ',', '.'); ?></h6>
  						</div>
- 						<div class="d-flex justify-content-between">
- 							<h6 class="font-weight-medium">Shipping</h6>
- 							<h6 class="font-weight-medium">Rp. 0</h6>
- 						</div>
  					</div>
  					<div class="card-footer border-secondary bg-transparent">
  						<div class="d-flex justify-content-between mt-2">

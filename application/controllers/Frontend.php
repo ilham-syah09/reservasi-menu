@@ -217,6 +217,7 @@ class Frontend extends CI_Controller
             'title'    => 'Checkout | Citra Bakery',
             'page'     => 'frontend/checkout',
             'kategori' => $this->front->getKategori(),
+            'ongkir'   => $this->front->getOngkir(),
             'cart'     => $cart
         ];
 
@@ -344,8 +345,12 @@ class Frontend extends CI_Controller
     {
         $this->_authentication();
 
-        $alamat = $this->input->post('alamat');
-        $catatan = $this->input->post('catatan');
+        $alamat           = $this->input->post('alamat');
+        $catatan          = $this->input->post('catatan');
+        $tanggal          = $this->input->post('tanggal');
+        $jam              = $this->input->post('jam');
+        $opsi             = $this->input->post('opsi');
+        $idOngkir         = $this->input->post('idOngkir');
         $metodePembayaran = $this->input->post('payment');
 
         $cart = $this->front->getCart([
@@ -367,7 +372,11 @@ class Frontend extends CI_Controller
                 'idKeranjang'      => $c->id,
                 'alamat'           => $alamat,
                 'catatan'          => $catatan,
+                'idOngkir'         => $idOngkir,
                 'metodePembayaran' => $metodePembayaran,
+                'tanggal'          => $tanggal,
+                'jam'              => $jam,
+                'opsi'             => $opsi,
                 'idKhusus'         => $idKhusus
             ]);
         }
