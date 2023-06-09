@@ -201,7 +201,8 @@
 				<td>Sum</td>
 				<td>Sub Total</td>
 			</tr>
-			<?php $totalHarga = 0; ?>
+			<?php $totalHarga = 0;
+			$finalHarga; ?>
 			<?php foreach ($pesanan as $i => $psn) : ?>
 				<?php $totalHarga += ($psn->harga * $psn->total); ?>
 				<tr>
@@ -212,17 +213,30 @@
 					<td align="right"><?= 'Rp. ' . number_format(($psn->harga * $psn->total), 0, ',', '.'); ?></td>
 				</tr>
 			<?php endforeach; ?>
-			<tr class="heading">
-				<td colspan="5">Shipping</td>
-			</tr>
-			<tr>
-				<td colspan="4"><?= $pesanan[0]->kecamatan; ?></td>
-				<td><?= "Rp. " . number_format($pesanan[0]->ongkir, 0, ',', '.'); ?></td>
-			</tr>
+
+			<?php if ($pesanan[0]->opsi == 'Delivery') : ?>
+				<tr class="heading">
+					<td colspan="5">Shipping</td>
+				</tr>
+				<tr>
+					<td colspan="4"><?= $pesanan[0]->kecamatan; ?></td>
+					<td><?= "Rp. " . number_format($pesanan[0]->ongkir, 0, ',', '.'); ?></td>
+				</tr>
+
+				<?php $finalHarga = 'Rp. ' . number_format(($pesanan[0]->ongkir + $totalHarga), 0, ',', '.');; ?>
+			<?php else : ?>
+				<tr class="heading">
+					<td colspan="4"><?= $pesanan[0]->opsi; ?></td>
+					<td>Rp. 0</td>
+				</tr>
+
+				<?php $finalHarga = 'Rp. ' . number_format(($totalHarga), 0, ',', '.');; ?>
+			<?php endif; ?>
+
 			<tr class="heading">
 				<td>Total</td>
 				<td><?= count($pesanan); ?></td>
-				<td colspan="3" align="right"><?= 'Rp. ' . number_format(($pesanan[0]->ongkir + $totalHarga), 0, ',', '.'); ?></td>
+				<td colspan="3" align="right"><?= $finalHarga; ?></td>
 			</tr>
 		</table>
 		<br />

@@ -202,6 +202,7 @@
                     if (res.data != null) {
                         let totalHarga = 0;
                         let harga = 0;
+                        let finalHarga;
 
                         let rupiah = new Intl.NumberFormat('id-ID', {
                             style: 'currency',
@@ -223,18 +224,31 @@
                             );
                         });
 
-                        $("#tabel_detail").append(
-                            "<tr class='tr_ongkir'>" +
-                            "<td colspan='3' class='text-center'>Pengiriman</td>" +
-                            "<td>" + res.data[0].kecamatan + "</td>" +
-                            "<td>" + rupiah.format(res.data[0].ongkir) + "</td>" +
-                            "<tr>"
-                        );
+                        if (res.data[0].opsi == 'Delivery') {
+                            $("#tabel_detail").append(
+                                "<tr class='tr_ongkir'>" +
+                                "<td colspan='3' class='text-center'>Pengiriman</td>" +
+                                "<td>" + res.data[0].kecamatan + "</td>" +
+                                "<td>" + rupiah.format(res.data[0].ongkir) + "</td>" +
+                                "<tr>"
+                            );
+
+                            finalHarga = rupiah.format(Number(totalHarga) + Number(res.data[0].ongkir));
+                        } else {
+                            $("#tabel_detail").append(
+                                "<tr class='tr_ongkir'>" +
+                                "<td colspan='4' class='text-center'>" + res.data[0].opsi + "</td>" +
+                                "<td>Rp. 0</td>" +
+                                "<tr>"
+                            );
+
+                            finalHarga = rupiah.format(Number(totalHarga));
+                        }
 
                         $("#tabel_detail").append(
                             "<tr class='tr_total'>" +
                             "<td colspan='4' class='text-center'>Total Bayar</td>" +
-                            "<td>" + rupiah.format(Number(totalHarga) + Number(res.data[0].ongkir)) + "</td>" +
+                            "<td>" + finalHarga + "</td>" +
                             "<tr>"
                         );
                     } else {

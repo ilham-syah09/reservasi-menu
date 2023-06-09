@@ -26,7 +26,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Opsi</label>
-							<select name="opsi" class="form-control" required>
+							<select name="opsi" class="form-control" required id="opsi">
 								<option value="">-- Select Opsi --</option>
 								<option value="Delivery">Delivery</option>
 								<option value="Picked up">Picked up</option>
@@ -34,7 +34,7 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Shipping</label>
-							<select name="idOngkir" class="form-control" id="ongkir" required>
+							<select name="idOngkir" class="form-control" id="ongkir" disabled>
 								<option value="">-- Select Shipping --</option>
 								<?php foreach ($ongkir as $o) : ?>
 									<option value="<?= $o->id; ?>" data-ongkir="<?= $o->harga; ?>"><?= $o->kecamatan; ?></option>
@@ -124,6 +124,35 @@
 	$('#tanggal').datepicker('setStartDate', new Date());
 
 	$('.js-masked-time').mask('99:99');
+
+	$('#opsi').change(function() {
+		let opsi = $(this).find(':selected').val();
+
+		if (opsi == 'Picked up') {
+			let rupiah = new Intl.NumberFormat('id-ID', {
+				style: 'currency',
+				currency: 'IDR'
+			});
+
+			let subTotal = $('#subTotal').val();
+
+			let total = Number(subTotal);
+
+			$('#shipping').text('');
+			$('#total').text(rupiah.format(total));
+
+			$('#ongkir').val('');
+
+			$('#ongkir').prop("disabled", true);
+			$('#ongkir').prop("required", false);
+		} else {
+			$('#shipping').text('');
+			$('#total').text('');
+
+			$('#ongkir').prop("disabled", false);
+			$('#ongkir').prop("required", true);
+		}
+	});
 
 	$('#ongkir').change(function() {
 		let rupiah = new Intl.NumberFormat('id-ID', {

@@ -60,11 +60,11 @@ class M_Admin extends CI_Model
 
     public function getListPesanan($where)
     {
-        $this->db->select('menu.nama_menu, menu.harga, keranjang.total, orders.idKhusus, orders.statusPembayaran, orders.createdAt, orders.metodePembayaran, orders.buktiPembayaran, user.name, user.noHp, ongkir.kecamatan, ongkir.harga as ongkir');
+        $this->db->select('menu.nama_menu, menu.harga, keranjang.total, orders.idKhusus, orders.statusPembayaran, orders.createdAt, orders.metodePembayaran, orders.buktiPembayaran, orders.opsi, user.name, user.noHp, ongkir.kecamatan, ongkir.harga as ongkir');
         $this->db->join('user', 'user.id = orders.idUser', 'inner');
         $this->db->join('keranjang', 'keranjang.id = orders.idKeranjang', 'inner');
         $this->db->join('menu', 'menu.id = keranjang.idMenu', 'inner');
-        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'inner');
+        $this->db->join('ongkir', 'ongkir.id = orders.idOngkir', 'left');
 
         $this->db->where($where);
 
