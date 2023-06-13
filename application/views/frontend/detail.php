@@ -246,6 +246,7 @@
 						</div>
 						<div class="card-footer d-flex justify-content-between bg-light border">
 							<a href="<?= base_url('detail/' . $pro->id); ?>" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+							<a href="javascript:void(0)" class="btn btn-sm text-dark p-0">Stock <i class="text-primary mr-1"><?= $product->stok; ?></i></a>
 							<?php if ($pro->stok > 0) : ?>
 								<form action="<?= base_url('addToCart'); ?>" method="POST">
 									<input type="hidden" name="idMenu" value="<?= $pro->id; ?>">
