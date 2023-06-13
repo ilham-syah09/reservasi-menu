@@ -352,6 +352,7 @@ class Frontend extends CI_Controller
         $opsi             = $this->input->post('opsi');
         $idOngkir         = $this->input->post('idOngkir');
         $metodePembayaran = $this->input->post('payment');
+        $totalBiaya       = $this->input->post('total');
 
         $cart = $this->front->getCart([
             'keranjang.idUser' => $this->dt_user->id,
@@ -377,7 +378,8 @@ class Frontend extends CI_Controller
                 'tanggal'          => $tanggal,
                 'jam'              => $jam,
                 'opsi'             => $opsi,
-                'idKhusus'         => $idKhusus
+                'idKhusus'         => $idKhusus,
+                'totalBiaya'       => $totalBiaya
             ]);
         }
 
@@ -467,7 +469,9 @@ class Frontend extends CI_Controller
         $update = $this->db->update('orders', $data);
 
         if ($update) {
-            unlink(FCPATH . 'upload/bukti/' . $order->buktiPembayaran);
+            if ($order->buktiPembayaran != null) {
+                unlink(FCPATH . 'upload/bukti/' . $order->buktiPembayaran);
+            }
             $this->session->set_flashdata('toastr-success', 'File uploaded successfully');
         } else {
             $this->session->set_flashdata('toastr-error', 'File failed to upload');

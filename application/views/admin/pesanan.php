@@ -22,6 +22,12 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Info boxes -->
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-12">
+                    <label>Tanggal</label>
+                    <input type="date" class="form-control" value="<?= $date; ?>" id="by_tanggal">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -39,11 +45,14 @@
                                             <th>Bukti Bayar</th>
                                             <th>Status Pembayaran</th>
                                             <th>Keterangan</th>
+                                            <th>Total Biaya</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($pesanan as $i => $psn) : ?>
+                                        <?php $total = 0;
+                                        foreach ($pesanan as $i => $psn) : ?>
+                                            <?php $total += $psn->totalBiaya; ?>
                                             <tr>
                                                 <td><?= $i + 1; ?></td>
                                                 <td><?= $psn->name; ?></td>
@@ -68,6 +77,7 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td><?= $psn->opsi . ' | ' . date('d M Y', strtotime($psn->tanggal)) . ' - ' . $psn->jam; ?></td>
+                                                <td><?= 'Rp. ' . number_format($psn->totalBiaya, 0, ',', '.'); ?></td>
                                                 <td>
                                                     <a href="#" class="badge badge-info detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-link="<?= base_url('admin/pesanan/cetak/' . $psn->idUser . '/' . $psn->idKhusus); ?>">Detail</a>
                                                     <a href="#" class="badge badge-danger statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
@@ -75,6 +85,12 @@
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9" class="text-center">Total pemasukan hari ini</td>
+                                            <td colspan="2"><?= 'Rp. ' . number_format($total, 0, ',', '.'); ?></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -170,6 +186,12 @@
 </div>
 
 <script>
+    $('#by_tanggal').change(function() {
+        let tanggal = $(this).val();
+
+        document.location.href = `<?php echo base_url('admin/pesanan/index/') ?>${tanggal}`;
+    });
+
     let detail_btn = $('.detail_btn');
 
     $(detail_btn).each(function(i) {

@@ -35,6 +35,7 @@
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Created At</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,6 +53,17 @@
                                                     </td>
                                                 <?php endif; ?>
                                                 <td><?= date('d F Y H:i:s', strtotime($u->created_at)) ?></td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Action
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a href="<?= base_url('admin/user/aktifkan/' . $u->id); ?>" class="dropdown-item">Aktifkan Akun</a>
+                                                            <a href="<?= base_url('admin/user/delete/' . $u->id); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="dropdown-item">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

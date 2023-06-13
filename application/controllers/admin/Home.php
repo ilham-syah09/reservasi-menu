@@ -19,13 +19,16 @@ class Home extends CI_Controller
 
     public function index()
     {
+        $totalPemasukan = $this->admin->getTotalPemasukan();
+
         $data = [
-            'title'  => 'Dashboard Admin',
-            'navbar' => 'admin/navbar',
-            'page'   => 'admin/dashboard',
-            'user'   => $this->admin->getCountUser(),
-            'menu'   => $this->admin->getCountMenu(),
-            'orders' => $this->admin->getCountOrders()
+            'title'          => 'Dashboard Admin',
+            'navbar'         => 'admin/navbar',
+            'page'           => 'admin/dashboard',
+            'user'           => $this->admin->getCountUser(),
+            'menu'           => $this->admin->getCountMenu(),
+            'orders'         => $this->admin->getCountOrders(),
+            'totalPemasukan' => $totalPemasukan
         ];
 
         $this->load->view('index', $data);

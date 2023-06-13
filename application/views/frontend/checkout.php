@@ -18,11 +18,11 @@
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Delivery/ Pickup Date</label>
-							<input class="form-control datepicker" name="tanggal" type="text" required id="tanggal" placeholder="yyyy/mm/dd">
+							<input class="form-control datepicker" name="tanggal" type="text" required id="tanggal" placeholder="yyyy/mm/dd" autocomplete="off">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Delivery/ Pickup Hours</label>
-							<input class="form-control js-masked-time" name="jam" type="text" required placeholder="__:__">
+							<input class="form-control js-masked-time" name="jam" type="text" required placeholder="__:__" autocomplete="off">
 						</div>
 						<div class="col-md-6 form-group">
 							<label>Opsi</label>
@@ -82,6 +82,7 @@
 						<div class="d-flex justify-content-between mt-2">
 							<h5 class="font-weight-bold">Total</h5>
 							<h5 class="font-weight-bold" id="total"></h5>
+							<input type="hidden" name="total" id="totalInput">
 						</div>
 					</div>
 				</div>
@@ -140,6 +141,7 @@
 
 			$('#shipping').text('');
 			$('#total').text(rupiah.format(total));
+			$('#totalInput').val(total);
 
 			$('#ongkir').val('');
 
@@ -148,6 +150,7 @@
 		} else {
 			$('#shipping').text('');
 			$('#total').text('');
+			$('#totalInput').val('');
 
 			$('#ongkir').prop("disabled", false);
 			$('#ongkir').prop("required", true);
@@ -166,6 +169,7 @@
 		if (ongkir == undefined) {
 			$('#shipping').text('');
 			$('#total').text('');
+			$('#totalInput').val('');
 
 			return 0;
 		}
@@ -174,5 +178,6 @@
 
 		$('#shipping').text(rupiah.format(ongkir));
 		$('#total').text(rupiah.format(total));
+		$('#totalInput').val(total);
 	})
 </script>

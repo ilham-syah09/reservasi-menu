@@ -3,7 +3,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_Admin extends CI_Model
 {
+    public function getTotalPemasukan()
+    {
+        $this->db->select('idKhusus, totalBiaya');
 
+        $this->db->group_by('idKhusus');
+
+        $data = $this->db->get('orders')->result();
+        $total = 0;
+
+        if ($data) {
+            foreach ($data as $dt) {
+                $total += $dt->totalBiaya;
+            }
+        }
+
+        return $total;
+    }
     public function getAllUser()
     {
         $this->db->where('role', 2);

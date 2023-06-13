@@ -18,13 +18,20 @@ class Pesanan extends CI_Controller
         $this->load->model('M_Admin', 'admin');
     }
 
-    public function index()
+    public function index($date = null)
     {
+        if (!$date) {
+            $date = date('Y-m-d');
+        }
+
         $data = [
             'title'   => 'Pesanan',
             'navbar'  => 'admin/navbar',
             'page'    => 'admin/pesanan',
-            'pesanan' => $this->admin->getPesanan()
+            'pesanan' => $this->admin->getPesanan([
+                'DATE(orders.createdAt)' => $date
+            ]),
+            'date'    => $date
         ];
 
         $this->load->view('index', $data);

@@ -29,6 +29,36 @@ class User extends CI_Controller
 
         $this->load->view('index', $data);
     }
+
+    public function aktifkan($id)
+    {
+        $this->db->where('id', $id);
+        $update = $this->db->update('user', [
+            'is_active' => 1
+        ]);
+
+        if ($update) {
+            $this->session->set_flashdata('toastr-success', 'Akun berhasil diaktifkan');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Akun gagal diaktifkan');
+        }
+
+        redirect('admin/user', 'refresh');
+    }
+
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $delete = $this->db->delete('user');
+
+        if ($delete) {
+            $this->session->set_flashdata('toastr-success', 'Data berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Data gagal dihapus');
+        }
+
+        redirect('admin/user', 'refresh');
+    }
 }
 
 /* End of file Home.php */
