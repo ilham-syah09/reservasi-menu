@@ -33,7 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover" id="example">
+                                <table class="table table-bordered table-hover" id="examples">
                                     <thead>
                                         <tr>
                                             <th class="text-center">#</th>
@@ -80,7 +80,8 @@
                                                 <td><?= 'Rp. ' . number_format($psn->totalBiaya, 0, ',', '.'); ?></td>
                                                 <td>
                                                     <a href="#" class="badge badge-info detail_btn" data-toggle="modal" data-target="#detailPesanan" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-link="<?= base_url('admin/pesanan/cetak/' . $psn->idUser . '/' . $psn->idKhusus); ?>">Detail</a>
-                                                    <a href="#" class="badge badge-danger statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
+                                                    <a href="#" class="badge badge-success statusPem_btn" data-toggle="modal" data-target="#statusPembayaranModal" data-iduser="<?= $psn->idUser; ?>" data-idkhusus="<?= $psn->idKhusus; ?>" data-statuspembayaran="<?= $psn->statusPembayaran; ?>">Pembayaran</a>
+                                                    <a href="<?= base_url('admin/pesanan/delete/' . $psn->idKhusus); ?>" onclick="return confirm('Apakah anda yakin ingin menghapus data ini ?')" class="badge badge-danger">Delete</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

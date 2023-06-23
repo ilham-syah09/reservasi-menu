@@ -20,6 +20,7 @@
 
     <!-- Datatables -->
     <link rel="stylesheet" href="<?= base_url('assets/plugins/datatable/dataTables.bootstrap4.min.css') ?>" type="text/css">
+    <link rel="stylesheet" href="<?= base_url('assets/plugins/datatable/buttons.bootstrap4.min.css') ?>" type="text/css">
 
     <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/toastr/toastr.min.css">
 
@@ -112,11 +113,113 @@
     <script src="<?php echo base_url(); ?>assets/plugins/datatable/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
 
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/dataTables.buttons.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/buttons.bootstrap4.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/jszip.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/pdfmake.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/vfs_fonts.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/buttons.print.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/datatable/buttons.colVis.min.js"></script>
+
     <script src="<?= base_url(); ?>assets/plugins/toastr/toastr.min.js"></script>
     <script src="<?= base_url(); ?>assets/plugins/toastr/customScript.js"></script>
 
     <script>
         $('#example').DataTable();
+
+        var table = $('#examples').DataTable({
+            lengthChange: false,
+            pageLength: 25,
+            buttons: [{
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                'colvis'
+            ],
+            columnDefs: [{
+                visible: false
+            }]
+        });
+
+        table.buttons().container()
+            .appendTo('#examples_wrapper .col-md-6:eq(0)');
+
+        var table2 = $('#examples2').DataTable({
+            lengthChange: false,
+            pageLength: 25,
+            buttons: [{
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                'colvis'
+            ],
+            columnDefs: [{
+                visible: false
+            }]
+        });
+
+        table2.buttons().container()
+            .appendTo('#examples2_wrapper .col-md-6:eq(0)');
+
+        var table3 = $('#examples3').DataTable({
+            lengthChange: false,
+            pageLength: 25,
+            buttons: [{
+                    extend: 'print',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible'
+                    }
+                },
+                'colvis'
+            ],
+            columnDefs: [{
+                visible: false
+            }]
+        });
+
+        table2.buttons().container()
+            .appendTo('#examples3_wrapper .col-md-6:eq(0)');
     </script>
 </body>
 

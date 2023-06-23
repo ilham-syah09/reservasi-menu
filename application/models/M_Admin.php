@@ -34,7 +34,7 @@ class M_Admin extends CI_Model
 
     public function getCountMenu()
     {
-        return $this->db->get('user')->num_rows();
+        return $this->db->get('menu')->num_rows();
     }
 
     public function getCountOrders()
@@ -117,6 +117,37 @@ class M_Admin extends CI_Model
         $this->db->order_by('kecamatan', 'asc');
 
         return $this->db->get('ongkir')->result();
+    }
+
+    public function getTahunIni()
+    {
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->order_by('tahun', 'desc');
+        $this->db->limit(1);
+
+        $data = $this->db->get('orders')->row();
+        return $data->tahun;
+    }
+
+    public function getBulanIni($tahun)
+    {
+        $this->db->select('MONTH(tanggal) as bulan');
+        $this->db->where('YEAR(tanggal)', $tahun);
+
+        $this->db->order_by('bulan', 'desc');
+        $this->db->limit(1);
+
+        $data = $this->db->get('orders')->row();
+        return $data->bulan;
+    }
+
+    public function getTahun()
+    {
+        $this->db->select('YEAR(tanggal) as tahun');
+        $this->db->group_by('tahun');
+        $this->db->order_by('tahun', 'desc');
+
+        return $this->db->get('orders')->result();
     }
 }
 

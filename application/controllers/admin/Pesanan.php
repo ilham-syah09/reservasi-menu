@@ -96,6 +96,28 @@ class Pesanan extends CI_Controller
 
         $this->load->view('admin/pdf_pesanan', $data);
     }
+
+    public function delete($idKhusus)
+    {
+        $this->db->select('idKeranjang');
+        $this->db->where('idKhusus', $idKhusus);
+        $cek = $this->db->get('orders')->result();
+
+        $this->db->where('idKhusus', $idKhusus);
+        $delete = $this->db->delete('orders');
+        if ($delete) {
+            foreach ($cek as $dt) {
+                $this->db->where('id', $dt->idKeranjang);
+                $this->db->delete('keranjang');
+            }
+
+            $this->session->set_flashdata('toastr-success', 'Pesanan berhasil dihapus');
+        } else {
+            $this->session->set_flashdata('toastr-error', 'Pesanan gagal dihapus');
+        }
+
+        redirect($_SERVER['HTTP_REFERER'], 'refresh');
+    }
 }
 
 /* End of file Pesanan.php */

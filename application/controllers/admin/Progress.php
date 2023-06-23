@@ -18,15 +18,21 @@ class Progress extends CI_Controller
         $this->load->model('M_Admin', 'admin');
     }
 
-    public function index()
+    public function index($date = null)
     {
+        if (!$date) {
+            $date = date('Y-m-d');
+        }
+
         $data = [
             'title'   => 'Progress Pesanan',
             'navbar'  => 'admin/navbar',
             'page'    => 'admin/progress',
             'pesanan' => $this->admin->getPesanan([
-                'statusPembayaran' => 1
-            ])
+                'orders.statusPembayaran' => 1,
+                'orders.tanggal' => $date
+            ]),
+            'date'    => $date
         ];
 
         $this->load->view('index', $data);

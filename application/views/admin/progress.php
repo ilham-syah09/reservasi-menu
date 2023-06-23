@@ -22,6 +22,12 @@
     <section class="content">
         <div class="container-fluid">
             <!-- Info boxes -->
+            <div class="row mb-3">
+                <div class="col-lg-4 col-md-12">
+                    <label>Tanggal</label>
+                    <input type="date" class="form-control" value="<?= $date; ?>" id="by_tanggal">
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
@@ -196,6 +202,12 @@
 </div>
 
 <script>
+    $('#by_tanggal').change(function() {
+        let tanggal = $(this).val();
+
+        document.location.href = `<?php echo base_url('admin/progress/index/') ?>${tanggal}`;
+    });
+
     let detail_btn = $('.detail_btn');
 
     $(detail_btn).each(function(i) {
@@ -219,10 +231,13 @@
                 success: function(res) {
                     $('#tampil').removeClass('d-none');
                     $('.tr_isi').remove();
+                    $('.tr_ongkir').remove();
+                    $('.tr_total').remove();
 
                     if (res.data != null) {
                         let totalHarga = 0;
                         let harga = 0;
+                        let finalHarga;
 
                         let rupiah = new Intl.NumberFormat('id-ID', {
                             style: 'currency',
@@ -244,10 +259,31 @@
                             );
                         });
 
+                        if (res.data[0].opsi == 'Delivery') {
+                            $("#tabel_detail").append(
+                                "<tr class='tr_ongkir'>" +
+                                "<td colspan='3' class='text-center'>Shipping</td>" +
+                                "<td>" + res.data[0].kecamatan + "</td>" +
+                                "<td>" + rupiah.format(res.data[0].ongkir) + "</td>" +
+                                "<tr>"
+                            );
+
+                            finalHarga = rupiah.format(Number(totalHarga) + Number(res.data[0].ongkir));
+                        } else {
+                            $("#tabel_detail").append(
+                                "<tr class='tr_ongkir'>" +
+                                "<td colspan='4' class='text-center'>" + res.data[0].opsi + "</td>" +
+                                "<td>Rp. 0</td>" +
+                                "<tr>"
+                            );
+
+                            finalHarga = rupiah.format(Number(totalHarga));
+                        }
+
                         $("#tabel_detail").append(
                             "<tr class='tr_total'>" +
                             "<td colspan='4' class='text-center'>Total Bayar</td>" +
-                            "<td>" + rupiah.format(totalHarga) + "</td>" +
+                            "<td>" + finalHarga + "</td>" +
                             "<tr>"
                         );
                     } else {
