@@ -17,6 +17,20 @@
         <div class="container-fluid">
             <!-- Info boxes -->
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="javascript:void(0)" class="text-decoration-none">
+                                <h1 class="mb-4 display-5 font-weight-semi-bold"><img src="<?= base_url('assets/logo/logo.png'); ?>" alt="Citra Bakery" class="img img-circle mr-2" width="120">Citra Bakery</h1>
+                            </a>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Jalan Panggung Baru No. 19 Kecamatan Tegal Timur Kota Tegal</p>
+                            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>admin@citrabakery.com</p>
+                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>0815 6900 053</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <a href="<?= base_url('admin/menu'); ?>" class="text-dark">
                         <div class="info-box">
@@ -85,20 +99,6 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <a href="javascript:void(0)" class="text-decoration-none">
-                                <h1 class="mb-4 display-5 font-weight-semi-bold"><img src="<?= base_url('assets/logo/logo.png'); ?>" alt="Citra Bakery" class="img img-circle mr-2" width="120">Citra Bakery</h1>
-                            </a>
-                            <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Jalan Panggung Baru No. 19 Kecamatan Tegal Timur Kota Tegal</p>
-                            <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>admin@citrabakery.com</p>
-                            <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>0815 6900 053</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!--/. container-fluid -->
     </section>

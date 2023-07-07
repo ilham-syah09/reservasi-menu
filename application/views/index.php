@@ -218,7 +218,7 @@
             }]
         });
 
-        table2.buttons().container()
+        table3.buttons().container()
             .appendTo('#examples3_wrapper .col-md-6:eq(0)');
     </script>
 </body>

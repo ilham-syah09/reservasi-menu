@@ -110,7 +110,7 @@
 			<div class="row">
 				<div class="col-sm-4 col-xl-4">
 					<div class="form-group">
-						<label for="by_tahun">Bulan</label>
+						<label for="by_bulan">Bulan</label>
 						<select class="js-select2 form-control" name="by_bulan" id="by_bulan">
 							<option value="">-- Pilih Bulan --</option>
 							<?php foreach (range(1, 12) as $bulan) : ?>
