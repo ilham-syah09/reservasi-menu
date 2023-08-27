@@ -26,8 +26,11 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover" id="examples">
+							<button type="button" class="btn btn-warning" data-toggle="tooltip" title="Download Rekap" onclick="window.open('<?= base_url('admin/omset/all'); ?>')">
+								<i class="fa fa-download"></i>
+							</button>
+							<div class="table-responsive mt-3">
+								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th class="text-center">#</th>
@@ -75,8 +78,11 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover" id="examples2">
+							<button type="button" class="btn btn-warning" data-toggle="tooltip" title="Download Rekap" onclick="window.open('<?= base_url('admin/omset/tahunan/' . $th_ini); ?>')">
+								<i class="fa fa-download"></i>
+							</button>
+							<div class="table-responsive mt-3">
+								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th class="text-center">#</th>
@@ -123,8 +129,11 @@
 				<div class="col-lg-12">
 					<div class="card">
 						<div class="card-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover" id="examples3">
+							<button type="button" class="btn btn-warning" data-toggle="tooltip" title="Download Rekap" onclick="window.open('<?= base_url('admin/omset/bulanan/' . $th_ini . '/' . $bln_ini); ?>')">
+								<i class="fa fa-download"></i>
+							</button>
+							<div class="table-responsive mt-3">
+								<table class="table table-bordered table-hover">
 									<thead>
 										<tr>
 											<th class="text-center">#</th>
